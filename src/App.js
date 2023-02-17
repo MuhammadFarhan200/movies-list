@@ -15,7 +15,9 @@ const App = () => {
     return popularMovie.map((movie, i) => {
       return (
         <div className="Movie-wrapper" key={i}>
-          <img className="Movie-image" src={`${process.env.REACT_APP_IMGURL}/${movie.poster_path}`} alt={movie.title} />
+          <div className="Image-container">
+            <img className="Movie-image" src={`${process.env.REACT_APP_IMGURL}/${movie.poster_path}`} alt={movie.title} />
+          </div>
           <div className="Movie-title">{movie.title}</div>
           <div className='Row'>
             <div className="Wrap-1">
@@ -33,22 +35,39 @@ const App = () => {
   }
 
   const search = async (q) => {
+    if (q === '') {
+      getMovieList().then((result) => {
+        setPopularMovie(result);
+      })
+      return;
+    }
     const query = await searchMovie(q)
-    console.log({query: query});
+    // console.log({query: query});
     setPopularMovie(query.results)
   }
-  
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>
           Movie List
         </h1>
-        <input
-          className="Movie-search"
-          placeholder="Ketikan sesuatu disini..."
-          onChange={({target}) => search(target.value)}
-        />
+        <div className="Search-container">
+          <input
+            className="Movie-search"
+            placeholder="Ketikan sesuatu disini..."
+            onChange={({ target }) => search(target.value)}
+          />
+          <button
+            className="Movie-reset"
+            onClick={() => {
+              search('')
+              document.querySelector('.Movie-search').value = ''
+            }}
+          >
+            Reset
+          </button>
+        </div>
         <div className="Movie-container">
           <PopularMovieList />
         </div>
