@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const apiKey = process.env.REACT_APP_APIKEY;
-const baseUrl = process.env.REACT_APP_APIURL;
-const genreUrl = process.env.REACT_APP_GENREURL;
+const apiKey = import.meta.env.VITE_APIKEY;
+const baseUrl = import.meta.env.VITE_API_URL;
+const genreUrl = import.meta.env.VITE_GENRE_URL;
 
 export const getMovieList = async () => {
   const movie = await axios.get(`${baseUrl}/movie/popular?page=1&api_key=${apiKey}`); // API URL
@@ -11,7 +11,7 @@ export const getMovieList = async () => {
 
 export const getGenreMovie = async () => {
   const genre = await axios.get(`${genreUrl}/movie/list?page=1&api_key=${apiKey}`); // API URL
-  return genre.data.results;
+  return genre.data.genres;
 }
 
 export const searchMovie = async (q) => {
