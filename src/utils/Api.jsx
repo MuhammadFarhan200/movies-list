@@ -4,9 +4,9 @@ const apiKey = import.meta.env.VITE_APIKEY;
 const baseUrl = import.meta.env.VITE_API_URL;
 const genreUrl = import.meta.env.VITE_GENRE_URL;
 
-export const getMovieList = async () => {
-  const movie = await axios.get(`${baseUrl}/movie/popular?page=1&api_key=${apiKey}`); // API URL
-  return movie.data.results;
+export const getMovieList = async (page) => {
+  const movie = await axios.get(`${baseUrl}/movie/top_rated?page=${page}&api_key=${apiKey}`); // API URL
+  return movie.data;
 }
 
 export const getGenreMovie = async () => {
