@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -16,6 +18,38 @@
   background-color: transparent;
 }
 
+::selection {
+  @apply bg-slate-600 text-white
+}
+
+* {
+  font-family: 'Poppins', sans-serif;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
 body {
   @apply bg-slate-900 min-w-full min-h-screen
+}
+
+.hamburger-active > span:nth-child(1) {
+  @apply rotate-45
+}
+.hamburger-active > span:nth-child(2) {
+  @apply scale-0
+}
+.hamburger-active > span:nth-child(3) {
+  @apply -rotate-45
+}
+
+.nav-menu-active {
+  @apply opacity-100
+}
+
+@layer components {
+  .hamburger-line {
+    @apply w-[30px] h-[2px] my-2 block bg-slate-200 transition-all duration-300 ease-in-out
+  }
+  .nav-link {
+    @apply block text-base whitespace-nowrap text-slate-200 font-medium px-5 py-3 hover:text-cyan-500 hover:bg-slate-700 lg:hover:bg-transparent lg:dark:hover:bg-transparent outline-none focus:outline-none transition-all
+  }
 }
