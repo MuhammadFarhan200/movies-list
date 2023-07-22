@@ -70,7 +70,7 @@ const Home = () => {
 
   const PopularMovieList = () => {
     return (
-      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-10'>
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-10 sm:mb-12'>
         {popularMovie.map((movie, index) => {
           return (
             <Link key={index} to={`/movie/${movie.id}`}
@@ -129,7 +129,7 @@ const Home = () => {
       <div className='container mx-auto p-5 lg:p-10'>
         <h3 className='text-sky-500 text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center font-semibold my-8'>Top Rated Movies</h3>
         <p className='text-slate-200 mb-6 max-w-3xl text-center mx-auto'>Come on, explore the complete list of films, read interesting reviews, and find recommendations for your favorite films. Make your free time more enjoyable with us!</p>
-        <div className='relative flex mb-12 w-[100%] sm:w-fit mx-auto'>
+        <div className='relative flex mb-6 sm:mb-12 w-[100%] sm:w-fit mx-auto'>
           <FontAwesomeIcon icon={faSearch} className='absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-200' />
           <input
             className='bg-slate-800 text-slate-200 w-full sm:w-[30rem] h-12 ps-11 pe-5 rounded-lg outline-none focus:ring-2 focus:ring-cyan-500 transition ease-in-out'
@@ -141,7 +141,7 @@ const Home = () => {
           />
         </div>
         <PopularMovieList />
-        <div className={`${isSearch ? 'hidden' : 'flex'} flex-wrap justify-center items-center gap-2`}>
+        <div className={`${isSearch ? 'hidden' : 'flex'} flex-wrap justify-center items-center gap-2 mb-5 sm:mb-3`}>
           <button type='button' name='prev' className={`${currentPage === 1 ? 'hidden' : 'inline-block'} button`}
             onClick={() => handleChangePage(currentPage - 1)}
             disabled={currentPage === 1}
