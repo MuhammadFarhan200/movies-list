@@ -10,7 +10,7 @@ import Loader from "../components/Loader";
 const Card = React.lazy(() => import('../components/Card'))
 
 const Home = () => {
-  const [popularMovie, setPopularMovie] = useState([])
+  const [topRatedMovie, settopRatedMovie] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(10);
@@ -25,7 +25,7 @@ const Home = () => {
     if (sessionPage) {
       setCurrentPage(parseInt(sessionPage))
       getMovieList(currentPage).then((res) => {
-        setPopularMovie(res.results)
+        settopRatedMovie(res.results)
       })
     } 
 
@@ -39,7 +39,7 @@ const Home = () => {
 
   useEffect(() => {
     getMovieList().then((res) => {
-      setPopularMovie(res.results)
+      settopRatedMovie(res.results)
     })
   }, [])
 
@@ -48,7 +48,7 @@ const Home = () => {
     setCurrentPage(pageNumber)
     sessionStorage.setItem('currentPage', pageNumber)
     getMovieList(pageNumber).then((res) => {
-      setPopularMovie(res.results)
+      settopRatedMovie(res.results)
     })
     if (pageNumber > 5) {
       setStartIndex(pageNumber - 5);
@@ -64,10 +64,10 @@ const Home = () => {
     setEndIndex((prevEndIndex) => prevEndIndex + 10);
   }
 
-  const PopularMovieList = () => {
+  const TopRatedMovieList = () => {
     return (
       <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-10 sm:mb-12'>
-        {popularMovie.map((movie, index) => (
+        {topRatedMovie.map((movie, index) => (
           <Suspense key={index} fallback={<Loader />}>
             <Card movie={movie} />
           </Suspense>
@@ -80,11 +80,11 @@ const Home = () => {
     if (q.trim()) {
       setIsSearch(true)
       const res = await searchMovie(q.toLowerCase().trim(), 1)
-      setPopularMovie(res.results)
+      settopRatedMovie(res.results)
     } else {
       setIsSearch(false)
       getMovieList(currentPage).then((res) => {
-        setPopularMovie(res.results)
+        settopRatedMovie(res.results)
       })
     }
   }
@@ -93,7 +93,7 @@ const Home = () => {
     <>
       <Navbar />
 
-      <div className='container mx-auto p-5 lg:p-10'>
+      <div className='container mx-auto p-5 lg:p-10' style={{ minHeight: 'calc(100vh - 136px)' }}>
         <h3 className='text-sky-500 text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center font-semibold my-8'>Top Rated Movies</h3>
         <p className='text-slate-200 mb-6 max-w-3xl text-center mx-auto'>Come on, explore the complete list of films, read interesting reviews, and find recommendations for your favorite films. Make your free time more enjoyable with us!</p>
         <div className='relative flex mb-6 sm:mb-12 w-[100%] sm:w-fit mx-auto' id='search-container'>
@@ -107,7 +107,7 @@ const Home = () => {
           />
           <FontAwesomeIcon icon={faSearch} className='absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-300' id='search-icon' />
         </div>
-        <PopularMovieList />
+        <TopRatedMovieList />
         <div className={`${isSearch ? 'hidden' : 'flex'} flex-wrap justify-center items-center gap-2 mb-5 sm:mb-3`}>
           <button type='button' name='prev' className={`${currentPage === 1 ? 'hidden' : 'inline-block'} button`}
             onClick={() => handleChangePage(currentPage - 1)}
