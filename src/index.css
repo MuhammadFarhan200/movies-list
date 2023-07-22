@@ -45,6 +45,10 @@ body {
   @apply opacity-100
 }
 
+#search-container input:focus ~ #search-icon {
+  @apply text-sky-500 !important
+}
+
 @layer components {
   .hamburger-line {
     @apply w-[30px] h-[2px] my-2 block bg-slate-200 transition-all duration-300 ease-in-out
@@ -54,6 +58,6 @@ body {
   }
 
   .button {
-    @apply bg-slate-800 text-slate-200 px-4 py-2 rounded-lg outline-none hover:text-cyan-500 focus:ring-2 focus:ring-cyan-500 transition ease-in-out
+    @apply bg-slate-800 text-slate-200 px-4 py-2 rounded-lg outline-none hover:text-cyan-500 focus:ring-2 focus:ring-cyan-500 transition-colors ease-in-out
   }
 }

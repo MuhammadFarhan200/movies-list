@@ -37,7 +37,7 @@ const Navbar = () => {
               <Link to='/' className='nav-link'>Home</Link>
             </li>
             <li className='group w-full h-full'>
-              <Link to='#' className='nav-link'>Genres</Link>
+              <Link to='/genres' className='nav-link'>Genres</Link>
             </li>
             <li className='group w-full h-full'>
               <Link to='#' className='nav-link'>Movies</Link>
