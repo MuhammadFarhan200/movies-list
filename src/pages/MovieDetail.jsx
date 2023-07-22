@@ -35,7 +35,7 @@ const MovieDetail = () => {
             className='rounded-lg w-48 mt-3 lg:my-3 text-slate-200'
           />
           <div className='hidden lg:block'>
-            <h1 className='text-sky-500 text-5xl font-semibold text-center'>{movie.title}</h1>
+            <h1 className='text-sky-500 text-4xl font-semibold text-center'>{movie.title}</h1>
             <div className='container mt-10'>
               <table className='table-auto text-slate-200 text-xl whitespace-nowrap mx-auto'>
                 <tbody>

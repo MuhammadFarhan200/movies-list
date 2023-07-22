@@ -25,7 +25,7 @@ const Genres = () => {
           {genres.map((genre, index) => (
             <div key={index}>
               <button className='flex w-full h-full justify-center items-center button group p-4'>
-                <h3 className='text-slate-200 group-hover:text-sky-500 text-lg font-medium'>{genre.name}</h3>
+                <h3 className='text-slate-200 group-hover:text-sky-500 font-medium'>{genre.name}</h3>
               </button>
             </div>
           ))}
