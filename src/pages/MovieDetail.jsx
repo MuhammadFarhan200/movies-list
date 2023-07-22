@@ -32,7 +32,7 @@ const MovieDetail = () => {
         <div className='absolute bg-black opacity-70 w-full h-full'></div>
         <div className='flex justify-center items-center gap-10 w-fit absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
           <img src={`${import.meta.env.VITE_IMG_URL}/${movie.poster_path}`} alt={movie.title}  
-            className='rounded-lg w-48 mt-3 lg:my-3 text-slate-200'
+            className='rounded-lg w-48 mt-3 lg:my-3 text-slate-200 shadow-xl'
           />
           <div className='hidden lg:block'>
             <h1 className='text-sky-500 text-4xl font-semibold text-center'>{movie.title}</h1>
@@ -40,12 +40,24 @@ const MovieDetail = () => {
               <table className='table-auto text-slate-200 text-xl whitespace-nowrap mx-auto'>
                 <tbody>
                   <tr>
-                    <td className='py-1 pe-12'>Status: {movie.status}</td>
-                    <td className='py-1 ps-12'>{movie.popularity} Popularity</td>
+                    <td className='py-1 pe-12'>
+                      <FontAwesomeIcon icon={['fas', 'film']} className='me-2' />
+                      {movie.status}
+                    </td>
+                    <td className='py-1 ps-12'>
+                      <FontAwesomeIcon icon={['fas', 'users']} className='me-2' />
+                      {movie.popularity} Popularity
+                    </td>
                   </tr>
                   <tr>
-                    <td className='py-1 pe-12'>Realesed on {releaseDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
-                    <td className='py-1 ps-12'>Rating: {movie.vote_average} ({movie.vote_count})</td>
+                    <td className='py-1 pe-12'>
+                      <FontAwesomeIcon icon={['fas', 'calendar-alt']} className='me-2' />
+                      {releaseDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    </td>
+                    <td className='py-1 ps-12'>
+                      <FontAwesomeIcon icon={['fas', 'star']} className='me-2' /> 
+                      {movie.vote_average} ({movie.vote_count} Votes)
+                    </td>
                   </tr>
                 </tbody>
               </table>
