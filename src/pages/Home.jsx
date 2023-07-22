@@ -4,7 +4,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { faSearch } from "@fortawesome/fontawesome-free-solid";
 import Footer from "../components/Footer";
-import Loader from "../components/Loader";
+import Loader from "../utils/Loader";
 
 const Card = React.lazy(() => import('../components/Card'))
 
@@ -24,6 +24,7 @@ const Home = () => {
     const sessionSearch = sessionStorage.getItem('searchQuery')
     const sessionPage = sessionStorage.getItem('currentPage')
     const sessionPageSearch = sessionStorage.getItem('pageSearch')
+
     if (sessionSearch) {
       setIsSearch(true)
       setSearchQuery(sessionSearch)
@@ -34,13 +35,11 @@ const Home = () => {
       })
     } else {
       setIsSearch(false)
-      if (sessionPage) {
-        setCurrentPage(parseInt(sessionPage))
-        getMovieList(currentPage).then((res) => {
-          setTopRatedMovie(res.results)
-          setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
-        })
-      }
+      sessionPage ? setCurrentPage(parseInt(sessionPage)) : setCurrentPage(1)
+      getMovieList(currentPage).then((res) => {
+        setTopRatedMovie(res.results)
+        setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
+      })
       if (currentPage > 5) {
         setStartIndex(currentPage - 5);
         setEndIndex(currentPage + 5);
