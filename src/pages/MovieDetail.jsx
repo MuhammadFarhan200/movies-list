@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { getMovieDetail } from "../utils/Api";
 import { useParams, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -69,8 +68,14 @@ const MovieDetail = () => {
       <div className='container mx-auto p-5 sm:p-10'>
         <div className='lg:hidden'>
           <h1 className='text-sky-500 text-2xl md:text-4xl font-semibold mb-5'>{movie.title}</h1>
-            <p className='text-slate-200 text-lg mb-2'>Status: {movie.status}</p>
-            <p className='text-slate-200 text-lg'>Realesed on {releaseDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+            <p className='text-slate-200 text-lg mb-2'>
+              <FontAwesomeIcon icon={['fas', 'film']} className='me-2' />
+              {movie.status}
+            </p>
+            <p className='text-slate-200 text-lg'>
+              <FontAwesomeIcon icon={['fas', 'calendar-alt']} className='me-2' />
+              {releaseDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </p>
         </div>
         <p className='text-slate-200 text-lg my-3'>{movie.overview}</p>
         <div className='bg-slate-800 rounded-xl p-4 mt-7 mb-10'>
@@ -83,8 +88,8 @@ const MovieDetail = () => {
               );
             })}
           </div>
-          <p className='text-slate-200 text-lg my-3 overflow-hidden whitespace-nowrap'>Official Site:&nbsp; 
-            <Link to={movie.homepage} className='text-sky-500 text-ellipsis hover:underline' target='_blank'>{movie.homepage}</Link>
+          <p className='text-slate-200 text-lg my-3 overflow-hidden whitespace-nowrap text-ellipsis'>Official Site:&nbsp; 
+            <Link to={movie.homepage} className='text-sky-500 hover:underline' target='_blank'>{movie.homepage}</Link>
           </p>
           <p className='text-slate-200 text-lg my-3'>Original Languange: <span className='uppercase'>{movie.original_language}</span></p>
           <p className='text-slate-200 text-lg my-3'>Duration: {movie.runtime} minutes</p>
@@ -107,11 +112,11 @@ const MovieDetail = () => {
             })}
           </div>
           <p className='lg:hidden text-slate-200 text-lg my-3'>Popularity: {movie.popularity}</p>
-          <p className='lg:hidden text-slate-200 text-lg my-3'>Rating: {movie.vote_average} ({movie.vote_count})</p>
+          <p className='lg:hidden text-slate-200 text-lg my-3'>Rating: {movie.vote_average} ({movie.vote_count} Votes)</p>
         </div>
 
         <button onClick={() => history.back()} className='block w-fit button py-3 my-5 ms-auto'>
-          <FontAwesomeIcon icon={faArrowLeft} className='me-1' /> Back to Before
+          <FontAwesomeIcon icon={['fas', 'arrow-left']} className='me-1' /> Back to Before
         </button>
       </div>
 

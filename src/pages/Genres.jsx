@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { getGenreMovie } from "../utils/Api";
+import { useNavigate } from "react-router-dom";
 
 const Genres = () => {
   const [genres, setGenres] = useState([])
+  const navigate = useNavigate()
   
   useEffect(() => {
     document.title = 'MList | Movie Genres'
@@ -24,7 +26,14 @@ const Genres = () => {
         <div className='grid grid-cols-2 row-auto sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-10 sm:mb-12'>
           {genres.map((genre, index) => (
             <div key={index}>
-              <button className='flex w-full h-full justify-center items-center button group p-4'>
+              <button 
+                className='flex w-full h-full justify-center items-center button group p-4'
+                onClick={() => {
+                  navigate('/movies')
+                  sessionStorage.setItem('currentPagePopular', 1)
+                  sessionStorage.setItem('genreId', genre.id)
+                }}
+              >
                 <h3 className='text-slate-200 group-hover:text-sky-500 font-medium'>{genre.name}</h3>
               </button>
             </div>

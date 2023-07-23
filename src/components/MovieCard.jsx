@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { getGenreMovie } from "../utils/Api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Card = ({ movie }) => {
+const MovieCard = ({ movie }) => {
   const [genreMovie, setGenreMovie] = useState([])
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const Card = ({ movie }) => {
     >
       <div className='absolute w-full h-full bg-black opacity-0 group-hover:opacity-70 rounded-lg transition ease-in-out'></div>
       <div className='opacity-0 absolute top-1/2 transform -translate-y-1/2 left-3 right-3 group-hover:opacity-100 text-center transition ease-in-out'>
-        <h3 className='text-white text-md whitespace-nowrap font-semibold'>{movie.title.substring(0, 15)}{movie.title.length > 15 ? '...' : ''}</h3>
+        <h3 className='text-white line-clamp-2 lg:line-clamp-1 text-md font-semibold'>{movie.title}</h3>
         <div className='flex justify-between mt-3 px-3'>
           <p className='text-white text-sm font-semibold'>
             <FontAwesomeIcon icon={['fas', 'calendar-alt']} className='me-1' />
@@ -47,7 +47,7 @@ const Card = ({ movie }) => {
           })}
         </div>
         {/* <p className='text-white text-sm mt-3 block sm:hidden'>{movie.status}</p> */}
-        <p className='text-white text-sm mt-3 hidden sm:block'>{`${movie.overview.substring(0, 100)}...`}</p>
+        <p className='text-white text-sm mt-3 hidden lg:block'>{`${movie.overview.substring(0, 100)}...`}</p>
       </div>
       <img src={`${import.meta.env.VITE_IMG_URL}/${movie.poster_path}`} alt={movie.title}
         className='rounded-lg w-full h-full text-slate-200' />
@@ -55,8 +55,8 @@ const Card = ({ movie }) => {
   )
 }
 
-Card.propTypes = {
+MovieCard.propTypes = {
   movie: PropTypes.object.isRequired
 }
 
-export default Card
+export default MovieCard

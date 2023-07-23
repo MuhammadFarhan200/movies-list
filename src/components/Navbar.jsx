@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const Navbar = () => {
   const handleClickHamburger = () => {
@@ -20,10 +20,17 @@ const Navbar = () => {
     }
   })
 
+  const handleClickNav = () => {
+    sessionStorage.removeItem('currentPage')
+  }
+
   return (
     <header className='bg-slate-800 py-4 sticky top-0 z-10'>
       <div className='container mx-auto flex justify-between items-center px-5 sm:px-10'>
-        <Link to='/' className='text-2xl font-semibold bg-gradient-to-tr from-sky-300 to-sky-500 bg-clip-text text-transparent py-1 px-2 outline-none focus:ring-2 focus:ring-cyan-500 focus:rounded-md'>MList</Link>
+        <NavLink to='/' onClick={handleClickNav} 
+          className='text-2xl font-semibold bg-gradient-to-tr from-sky-300 to-sky-500 bg-clip-text text-transparent py-1 px-2 outline-none focus:ring-2 focus:ring-cyan-500 focus:rounded-md'
+        >MList
+        </NavLink>
         <button type='button' id='hamburger' name='hamburger' className='block right-4 outline-none lg:hidden'
           onClick={handleClickHamburger}
         >
@@ -34,19 +41,19 @@ const Navbar = () => {
         <nav id='nav-menu' className='hidden absolute bg-slate-800 lg:bg-transparent rounded-lg lg:static lg:block w-[250px] lg:w-fit top-[5rem] right-4 overflow-hidden transition-all ease-in-out'>
           <ul className='block lg:flex'>
             <li className='group w-full h-full'>
-              <Link to='/' className='nav-link'>Home</Link>
+              <NavLink to='/' className='nav-link' onClick={handleClickNav}>Home</NavLink>
             </li>
             <li className='group w-full h-full'>
-              <Link to='/genres' className='nav-link'>Genres</Link>
+              <NavLink to='/genres' className='nav-link'>Genres</NavLink>
             </li>
             <li className='group w-full h-full'>
-              <Link to='#' className='nav-link'>Movies</Link>
+              <NavLink to='/movies' className='nav-link' onClick={handleClickNav}>Movies</NavLink>
             </li>
             <li className='group w-full h-full'>
-              <Link to='#' className='nav-link'>Companies</Link>
+              <NavLink to='#' className='nav-link non-active'>Companies</NavLink>
             </li>
             <li className='group w-full h-full'>
-              <Link to='#' className='nav-link'>About Us</Link>
+              <NavLink to='#' className='nav-link non-active'>About Us</NavLink>
             </li>
           </ul>
         </nav>

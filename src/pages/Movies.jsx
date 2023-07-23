@@ -1,52 +1,93 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getMovieList, searchMovie } from "../utils/Api";
-import React, { Suspense, useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
-import { faSearch } from "@fortawesome/fontawesome-free-solid";
 import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import React, { Suspense, useEffect, useState } from "react";
 import Loader from "../utils/Loader";
+import { getMovieList, searchMovie, getDiscoverMovie, getGenreMovie } from "../utils/Api";
 
-const MovieCard = React.lazy(() => import('../components/MovieCard'))
+const MovieCard = React.lazy(() => import('../components/MovieCard'));
 
-const Home = () => {
-  const [topRatedMovie, setTopRatedMovie] = useState([])
-  const [currentPage, setCurrentPage] = useState(1)
-  const [currentPageSearch, setCurrentPageSearch] = useState(1)
-  const [startIndex, setStartIndex] = useState(0);
-  const [endIndex, setEndIndex] = useState(10);
+const Movies = () => {
+  const [popularMovie, setPopularMovie] = useState([])
+  const [genreMovie, setGenreMovie] = useState([])
+  const [genreId, setGenreId] = useState(null)
   const [isSearch, setIsSearch] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
-  const [totalPages, setTotalPages] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPageSearch, setCurrentPageSearch] = useState(1)
+  const [totalPages, setTotalPages] = useState()
+  const [startIndex, setStartIndex] = useState(0)
+  const [endIndex, setEndIndex] = useState(10)
 
   useEffect(() => {
-    document.title = 'MList | Find Your Favorite Movie'
-    // window.scrollTo(0, 0)
+    document.title = 'MList | List of Movies'
+    window.scrollTo(0, 0)
+
     const sessionSearch = sessionStorage.getItem('searchQuery')
-    const sessionPage = sessionStorage.getItem('currentPage')
+    const sessionPage = sessionStorage.getItem('currentPagePopular')
     const sessionPageSearch = sessionStorage.getItem('pageSearch')
+    const sessionGenreId = sessionStorage.getItem('genreId')
 
     if (sessionSearch) {
       setIsSearch(true)
       setSearchQuery(sessionSearch)
       sessionPageSearch ? setCurrentPageSearch(parseInt(sessionPageSearch)) : setCurrentPageSearch(1)
       searchMovie(sessionSearch, currentPageSearch).then((res) => {
-        setTopRatedMovie(res.results)
+        setPopularMovie(res.results)
         setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
       })
     } else {
       setIsSearch(false)
       sessionPage ? setCurrentPage(parseInt(sessionPage)) : setCurrentPage(1)
-      getMovieList(currentPage).then((res) => {
-        setTopRatedMovie(res.results)
-        setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
-      })
-      if (currentPage > 5) {
-        setStartIndex(currentPage - 5);
-        setEndIndex(currentPage + 5);
+      if (sessionGenreId) {
+        setGenreId(sessionGenreId)
+        getDiscoverMovie(currentPage, genreId).then((res) => {
+          setPopularMovie(res.results)
+          setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
+        })
+        getGenreMovie().then((res) => {
+          setGenreMovie(res.filter((genre) => genre.id === parseInt(genreId)))
+        })
+      } else {
+        getMovieList(currentPage, 'popular').then((res) => {
+          setPopularMovie(res.results)
+          setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
+        })
+        if (currentPage > 5) {
+          setStartIndex(currentPage - 5);
+          setEndIndex(currentPage + 5);
+        }
       }
     }
-    // console.log(currentPage);
-  }, [currentPage, currentPageSearch])
+
+  }, [currentPage, currentPageSearch, genreId])
+
+  const search = async (q) => {
+    if (q.trim()) {
+      setIsSearch(true)
+      const sessionGenreId = sessionStorage.getItem('genreId')
+      if (sessionGenreId) {
+        sessionStorage.removeItem('genreId')
+        setGenreId(null)
+      }
+      setSearchQuery(q)
+      sessionStorage.setItem('searchQuery', q)
+      const res = await searchMovie(q, 1)
+      setPopularMovie(res.results)
+      setCurrentPageSearch(1)
+      sessionStorage.setItem('pageSearch', 1)
+      setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
+      setStartIndex(0);
+    } else {
+      setIsSearch(false)
+      sessionStorage.removeItem('searchQuery')
+      setCurrentPage(1)
+      getMovieList(currentPage, 'popular').then((res) => {
+        setPopularMovie(res.results)
+        setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
+      })
+    }
+  } 
 
   const handleChangePage = (pageNumber) => {
     // window.scrollTo(0, 0)
@@ -54,14 +95,31 @@ const Home = () => {
       setCurrentPageSearch(pageNumber)
       sessionStorage.setItem('pageSearch', pageNumber)
       searchMovie(searchQuery, pageNumber).then((res) => {
-        setTopRatedMovie(res.results)
+        setPopularMovie(res.results)
         setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
       })
+    } else if (genreId !== null) {
+      setCurrentPage(pageNumber)
+      sessionStorage.setItem('currentPagePopular', pageNumber)
+      getDiscoverMovie(pageNumber, genreId).then((res) => {
+        setPopularMovie(res.results)
+        setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
+      })
+      getGenreMovie().then((res) => {
+        setGenreMovie(res.filter((genre) => genre.id === parseInt(genreId)))
+      }) 
+      if (pageNumber > 5) {
+        setStartIndex(pageNumber - 5);
+        setEndIndex(pageNumber + 5);
+      } else {
+        setStartIndex(0);
+        setEndIndex(10);
+      }
     } else {
       setCurrentPage(pageNumber)
-      sessionStorage.setItem('currentPage', pageNumber)
-      getMovieList(pageNumber).then((res) => {
-        setTopRatedMovie(res.results)
+      sessionStorage.setItem('currentPagePopular', pageNumber)
+      getMovieList(pageNumber, 'popular').then((res) => {
+        setPopularMovie(res.results)
         setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
       })
       if (pageNumber > 5) {
@@ -79,10 +137,23 @@ const Home = () => {
     setEndIndex((prevEndIndex) => prevEndIndex + 10);
   }
 
-  const TopRatedMovieList = () => {
-    return topRatedMovie.length > 0 ? (
+  const handleRemoveFilter = () => {
+    sessionStorage.removeItem('genreId')
+    sessionStorage.removeItem('currentPagePopular')
+    setGenreId(null)
+    setCurrentPage(1)
+    getMovieList(currentPage, 'popular').then((res) => {
+      setPopularMovie(res.results)
+      setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
+    })
+    setStartIndex(0);
+    setEndIndex(10);
+  }
+
+  const PopularMovieList = () => {
+    return popularMovie.length > 0 ? (
       <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-10 sm:mb-12'>
-        {topRatedMovie.map((movie, index) => (
+        {popularMovie.map((movie, index) => (
           <Suspense key={index} fallback={<Loader />}>
             <MovieCard movie={movie} />
           </Suspense>
@@ -94,36 +165,14 @@ const Home = () => {
       </div>
     )
   }
-
-  const search = async (q) => {
-    if (q.trim()) {
-      setIsSearch(true)
-      setSearchQuery(q)
-      sessionStorage.setItem('searchQuery', q)
-      const res = await searchMovie(q, 1)
-      setTopRatedMovie(res.results)
-      setCurrentPageSearch(1)
-      sessionStorage.setItem('pageSearch', 1)
-      setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
-      setStartIndex(0);
-    } else {
-      setIsSearch(false)
-      sessionStorage.removeItem('searchQuery')
-      setCurrentPage(1)
-      getMovieList(currentPage).then((res) => {
-        setTopRatedMovie(res.results)
-        setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
-      })
-    }
-  } 
-
+  
   return (
     <>
       <Navbar />
 
       <div className='container mx-auto p-5 lg:p-10' style={{ minHeight: 'calc(100vh - 136px)' }}>
-        <h3 className='text-sky-500 text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center font-semibold my-8'>Top Rated Movies</h3>
-        <p className='text-slate-200 mb-6 max-w-3xl text-center mx-auto'>Come on, explore the complete list of films and find recommendations for your favorite films. Make your free time more enjoyable with us!</p>
+        <h3 className='text-sky-500 text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center font-semibold my-8'>List of Movies</h3>
+        <p className='text-slate-200 mb-6 max-w-3xl text-center mx-auto'>Come on, explore the complete list of film and find recommendations for your favorite films. Make your free time more enjoyable with us!</p>
         <div className='relative flex mb-6 sm:mb-12 w-[100%] sm:w-fit mx-auto' id='search-container'>
           <input
             className='bg-slate-800 text-slate-200 w-full sm:w-[30rem] h-12 ps-11 pe-5 rounded-lg outline-none focus:ring-2 focus:ring-cyan-500'
@@ -134,10 +183,23 @@ const Home = () => {
             autoComplete="off"
             value={isSearch ? searchQuery : ''}
           />
-          <FontAwesomeIcon icon={faSearch} className='absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-300' id='search-icon' />
+          <FontAwesomeIcon icon={['fas', 'search']} className='absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-300' id='search-icon' />
         </div>
-        <TopRatedMovieList />
-        {topRatedMovie.length < 1 ? (
+        {genreId !== null ? (
+          <div className='flex justify-between items-center mb-6'>
+            <p className='text-slate-200 text-lg'>Filter by Genre: {genreMovie.map((genre, index) => (
+              <span key={index} className='text-sky-500 text-lg font-medium'>{genre.name}</span>
+            ))}</p>
+            <button type='button' className='button'
+              onClick={handleRemoveFilter}
+            >
+              <FontAwesomeIcon icon={['fas', 'times']} className='me-2' />
+              Clear Filter
+            </button>
+          </div>
+        ) : (<></>)}
+        <PopularMovieList />
+        {popularMovie.length < 1 ? (
           <></>
         ) : (
           <>
@@ -232,10 +294,10 @@ const Home = () => {
           </>
         )}
       </div>
-      
+
       <Footer />
     </>
-  )
+  );
 }
 
-export default Home
+export default Movies;
