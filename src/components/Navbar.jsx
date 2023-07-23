@@ -1,6 +1,9 @@
-import { NavLink } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 const Navbar = () => {
+  const location = useLocation()
+  const path = location.pathname
+
   const handleClickHamburger = () => {
     const hamburger = document.getElementById('hamburger')
     const navMenu = document.getElementById('nav-menu')
@@ -27,10 +30,10 @@ const Navbar = () => {
   return (
     <header className='bg-slate-800 py-4 sticky top-0 z-10'>
       <div className='container mx-auto flex justify-between items-center px-5 sm:px-10'>
-        <NavLink to='/' onClick={handleClickNav} 
-          className='text-2xl font-semibold bg-gradient-to-tr from-sky-300 to-sky-500 bg-clip-text text-transparent py-1 px-2 outline-none focus:ring-2 focus:ring-cyan-500 focus:rounded-md'
+        <Link to='/' onClick={handleClickNav} 
+          className='text-2xl font-semibold bg-gradient-to-tr from-sky-300 to-sky-500 bg-clip-text text-transparent px-1 outline-none focus:ring-2 focus:ring-cyan-500 focus:rounded-md'
         >MList
-        </NavLink>
+        </Link>
         <button type='button' id='hamburger' name='hamburger' className='block right-4 outline-none lg:hidden'
           onClick={handleClickHamburger}
         >
@@ -41,19 +44,19 @@ const Navbar = () => {
         <nav id='nav-menu' className='hidden absolute bg-slate-800 lg:bg-transparent rounded-lg lg:static lg:block w-[250px] lg:w-fit top-[5rem] right-4 overflow-hidden transition-all ease-in-out'>
           <ul className='block lg:flex'>
             <li className='group w-full h-full'>
-              <NavLink to='/' exact activeClassName='active' className='nav-link' onClick={handleClickNav}>Home</NavLink>
+              <Link to='/' className={`nav-link ${path === '/' ? 'active' : ''}`} onClick={handleClickNav}>Home</Link>
             </li>
             <li className='group w-full h-full'>
-              <NavLink to='/genres' activeClassName='active' className='nav-link'>Genres</NavLink>
+              <Link to='/genres' className={`nav-link ${path === '/genres' ? 'active' : ''}`}>Genres</Link>
             </li>
             <li className='group w-full h-full'>
-              <NavLink to='/movies' activeClassName='active' className='nav-link' onClick={handleClickNav}>Movies</NavLink>
+              <Link to='/movies' className={`nav-link ${path == '/movies' || path.startsWith('/movie') ? 'active' : ''}`} onClick={handleClickNav}>Movies</Link>
             </li>
             <li className='group w-full h-full'>
-              <NavLink to='#' activeClassName='active' className='nav-link non-active'>Companies</NavLink>
+              <Link to='#' className='nav-link non-active'>Companies</Link>
             </li>
             <li className='group w-full h-full'>
-              <NavLink to='#' activeClassName='active' className='nav-link non-active'>About Us</NavLink>
+              <Link to='#' className='nav-link non-active'>About Us</Link>
             </li>
           </ul>
         </nav>

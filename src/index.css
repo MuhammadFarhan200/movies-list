@@ -49,6 +49,14 @@ body {
   @apply text-sky-500 !important
 }
 
+.swiper-pagination-bullet {
+  @apply w-3 h-3 rounded-full bg-slate-200 opacity-50
+}
+
+.swiper-pagination-bullet-active {
+  @apply bg-sky-500 opacity-100
+}
+
 @layer components {
   .hamburger-line {
     @apply w-[30px] h-[2px] my-2 block bg-slate-200 transition-all duration-300 ease-in-out

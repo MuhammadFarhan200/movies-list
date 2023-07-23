@@ -1,9 +1,9 @@
+import React, { Suspense, useEffect, useState } from "react";
+import { getMovieList, searchMovie, getDiscoverMovie, getGenreMovie } from "../utils/Api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import React, { Suspense, useEffect, useState } from "react";
 import Loader from "../utils/Loader";
-import { getMovieList, searchMovie, getDiscoverMovie, getGenreMovie } from "../utils/Api";
 
 const MovieCard = React.lazy(() => import('../components/MovieCard'));
 
@@ -171,7 +171,7 @@ const Movies = () => {
       <Navbar />
 
       <div className='container mx-auto p-5 lg:p-10' style={{ minHeight: 'calc(100vh - 136px)' }}>
-        <h3 className='text-sky-500 text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center font-semibold my-8'>List of Movies</h3>
+        <h3 className='text-sky-500 text-2xl sm:text-3xl md:text-4xl text-center font-semibold my-8'>List of Movies</h3>
         <p className='text-slate-200 mb-6 max-w-3xl text-center mx-auto'>Come on, explore the complete list of film and find recommendations for your favorite films. Make your free time more enjoyable with us!</p>
         <div className='relative flex mb-6 sm:mb-12 w-[100%] sm:w-fit mx-auto' id='search-container'>
           <input
@@ -186,17 +186,23 @@ const Movies = () => {
           <FontAwesomeIcon icon={['fas', 'search']} className='absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-300' id='search-icon' />
         </div>
         {genreId !== null ? (
-          <div className='flex justify-between items-center mb-6'>
-            <p className='text-slate-200 text-lg'>Filter by Genre: {genreMovie.map((genre, index) => (
-              <span key={index} className='text-sky-500 text-lg font-medium'>{genre.name}</span>
-            ))}</p>
-            <button type='button' className='button'
-              onClick={handleRemoveFilter}
-            >
-              <FontAwesomeIcon icon={['fas', 'times']} className='me-2' />
-              Clear Filter
-            </button>
-          </div>
+          <>
+            <div className='flex justify-between items-center mb-3'>
+              <p className='text-slate-200 text-lg'>Filter by Genre: </p>
+              <button type='button' className='button'
+                onClick={handleRemoveFilter}
+              >
+                <FontAwesomeIcon icon={['fas', 'times']} className='me-2' />
+                <span className='whitespace-nowrap'>Clear</span>
+              </button>
+            </div>
+            <div className='flex flex-wrap gap-2 mb-7'>
+              {genreMovie.map((genre, index) => (
+                <span key={index} className='bg-slate-800 text-cyan-500 px-4 py-2 rounded-lg outline-none'>{genre.name}</span>
+              ))}
+            </div>
+          </>
+          
         ) : (<></>)}
         <PopularMovieList />
         {popularMovie.length < 1 ? (

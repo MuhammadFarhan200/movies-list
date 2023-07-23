@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import PropTypes from 'prop-types';
 import { getGenreMovie } from "../utils/Api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from 'prop-types';
 
 const MovieCard = ({ movie }) => {
   const [genreMovie, setGenreMovie] = useState([])
