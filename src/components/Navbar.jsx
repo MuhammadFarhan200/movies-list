@@ -41,19 +41,19 @@ const Navbar = () => {
         <nav id='nav-menu' className='hidden absolute bg-slate-800 lg:bg-transparent rounded-lg lg:static lg:block w-[250px] lg:w-fit top-[5rem] right-4 overflow-hidden transition-all ease-in-out'>
           <ul className='block lg:flex'>
             <li className='group w-full h-full'>
-              <NavLink to='/' className='nav-link' onClick={handleClickNav}>Home</NavLink>
+              <NavLink to='/' exact activeClassName='active' className='nav-link' onClick={handleClickNav}>Home</NavLink>
             </li>
             <li className='group w-full h-full'>
-              <NavLink to='/genres' className='nav-link'>Genres</NavLink>
+              <NavLink to='/genres' activeClassName='active' className='nav-link'>Genres</NavLink>
             </li>
             <li className='group w-full h-full'>
-              <NavLink to='/movies' className='nav-link' onClick={handleClickNav}>Movies</NavLink>
+              <NavLink to='/movies' activeClassName='active' className='nav-link' onClick={handleClickNav}>Movies</NavLink>
             </li>
             <li className='group w-full h-full'>
-              <NavLink to='#' className='nav-link non-active'>Companies</NavLink>
+              <NavLink to='#' activeClassName='active' className='nav-link non-active'>Companies</NavLink>
             </li>
             <li className='group w-full h-full'>
-              <NavLink to='#' className='nav-link non-active'>About Us</NavLink>
+              <NavLink to='#' activeClassName='active' className='nav-link non-active'>About Us</NavLink>
             </li>
           </ul>
         </nav>
