@@ -10,7 +10,7 @@ const MovieCard = React.lazy(() => import('../components/MovieCard'));
 const Movies = () => {
   const [popularMovie, setPopularMovie] = useState([])
   const [genreMovie, setGenreMovie] = useState([])
-  const [genreId, setGenreId] = useState(null)
+  const [genreId, setGenreId] = useState([])
   const [isSearch, setIsSearch] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
@@ -41,12 +41,13 @@ const Movies = () => {
       sessionPage ? setCurrentPage(parseInt(sessionPage)) : setCurrentPage(1)
       if (sessionGenreId) {
         setGenreId(sessionGenreId)
-        getDiscoverMovie(currentPage, genreId).then((res) => {
+        const parseGenreId = JSON.parse(sessionGenreId)
+        getDiscoverMovie(currentPage, parseGenreId).then((res) => {
           setPopularMovie(res.results)
           setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
         })
         getGenreMovie().then((res) => {
-          setGenreMovie(res.filter((genre) => genre.id === parseInt(genreId)))
+          setGenreMovie(res.filter((genre) => genreId.includes(genre.id)))
         })
       } else {
         getMovieList(currentPage, 'popular').then((res) => {
@@ -68,7 +69,7 @@ const Movies = () => {
       const sessionGenreId = sessionStorage.getItem('genreId')
       if (sessionGenreId) {
         sessionStorage.removeItem('genreId')
-        setGenreId(null)
+        setGenreId([])
       }
       setSearchQuery(q)
       sessionStorage.setItem('searchQuery', q)
@@ -140,8 +141,8 @@ const Movies = () => {
   const handleRemoveFilter = () => {
     sessionStorage.removeItem('genreId')
     sessionStorage.removeItem('currentPagePopular')
-    setGenreId(null)
     setCurrentPage(1)
+    setGenreId([])
     getMovieList(currentPage, 'popular').then((res) => {
       setPopularMovie(res.results)
       setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
@@ -185,15 +186,15 @@ const Movies = () => {
           />
           <FontAwesomeIcon icon={['fas', 'search']} className='absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-300' id='search-icon' />
         </div>
-        {genreId !== null ? (
+        {genreId.length > 0 ? (
           <>
             <div className='flex justify-between items-center mb-3'>
               <p className='text-slate-200 text-lg'>Filter by Genre: </p>
               <button type='button' className='button'
-                onClick={handleRemoveFilter}
+                onClick={() => handleRemoveFilter()}
               >
                 <FontAwesomeIcon icon={['fas', 'times']} className='me-2' />
-                <span className='whitespace-nowrap'>Clear</span>
+                <span className='whitespace-nowrap'>Clear Filter</span>
               </button>
             </div>
             <div className='flex flex-wrap gap-2 mb-7'>

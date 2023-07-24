@@ -4,10 +4,10 @@ import { getGenreMovie } from "../utils/Api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from 'prop-types';
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, className }) => {
   const [genreMovie, setGenreMovie] = useState([])
 
-  useEffect(() => {
+  useEffect(() => { 
     getGenreMovie().then((res) => {
       setGenreMovie(res)
     })
@@ -17,7 +17,7 @@ const MovieCard = ({ movie }) => {
   
   return (
     <Link to={`/movie/${movie.id}`}
-      className='group relative rounded-lg outline-none focus:ring-[3px] focus:ring-cyan-500 cursor-pointer overflow-hidden'
+      className={`group relative rounded-lg outline-none focus:ring-[3px] focus:ring-cyan-500 cursor-pointer overflow-hidden ${className}`}
     >
       <div className='absolute w-full h-full bg-black opacity-0 group-hover:opacity-70 rounded-lg transition ease-in-out'></div>
       <div className='opacity-0 absolute top-1/2 transform -translate-y-1/2 left-3 right-3 group-hover:opacity-100 text-center transition ease-in-out'>
@@ -56,7 +56,8 @@ const MovieCard = ({ movie }) => {
 }
 
 MovieCard.propTypes = {
-  movie: PropTypes.object.isRequired
+  movie: PropTypes.object.isRequired,
+  className: PropTypes.string
 }
 
 export default MovieCard

@@ -3,15 +3,17 @@ import { getMovieList } from "../utils/Api";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, A11y } from "swiper/modules"
+import { Pagination, Mousewheel } from "swiper/modules"
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Loader from "../utils/Loader";
 import "@fortawesome/fontawesome-free-solid";
 import "swiper/css";
 import "swiper/css/pagination"
+import "swiper/css/mousewheel"
 
 const MovieCard = React.lazy(() => import('../components/MovieCard'))
+// const SliderCard = React.lazy(() => import('../components/SliderCard'))
 
 const Home = () => {
   const [topRatedMovie, setTopRatedMovie] = useState([])
@@ -21,7 +23,7 @@ const Home = () => {
 
   useEffect(() => {
     document.title = 'MList | Find Your Favorite Movie'
-    // window.scrollTo(0, 0)
+    window.scrollTo(0, 0)
     getMovieList(1, 'now_playing').then((res) => {
       setNowPlayingMovie(res.results)
     })
@@ -40,10 +42,11 @@ const Home = () => {
   const NowPlayingMovieList = () => {
     return nowPlayingMovie.length > 0 ? (
       <Swiper
-        modules={[Pagination, A11y]}
+        modules={[Pagination, Mousewheel]}
         spaceBetween={15}
         slidesPerView={2}
         pagination={{ clickable: true, dynamicBullets: true }}
+        mousewheel={{ invert: true }}
         breakpoints={{
           640: {
             slidesPerView: 4,
@@ -60,7 +63,7 @@ const Home = () => {
         {nowPlayingMovie.map((movie, index) => (
           <SwiperSlide key={index}>
             <Suspense fallback={<Loader />}>
-              <MovieCard movie={movie} />
+              <MovieCard movie={movie} className='focus:ring-0' />
             </Suspense>
           </SwiperSlide>
         ))}
@@ -75,10 +78,11 @@ const Home = () => {
   const PopularMovieList = () => {
     return popularMovie.length > 0 ? (
       <Swiper
-        modules={[Pagination, A11y]}
+        modules={[Pagination, Mousewheel]}
         spaceBetween={15}
         slidesPerView={2}
         pagination={{ clickable: true, dynamicBullets: true }}
+        mousewheel={{ invert: true }}
         breakpoints={{
           640: {
             slidesPerView: 3,
@@ -95,7 +99,7 @@ const Home = () => {
         {popularMovie.map((movie, index) => (
           <SwiperSlide key={index}>
             <Suspense fallback={<Loader />}>
-              <MovieCard movie={movie} />
+              <MovieCard movie={movie} className='focus:ring-0' />
             </Suspense>
           </SwiperSlide>
         ))}
@@ -110,10 +114,11 @@ const Home = () => {
   const TopRatedMovieList = () => {
     return topRatedMovie.length > 0 ? (
       <Swiper
-        modules={[Pagination, A11y]}
+        modules={[Pagination, Mousewheel]}
         spaceBetween={15}
         slidesPerView={2}
         pagination={{ clickable: true, dynamicBullets: true }}
+        mousewheel={{ invert: true }}
         breakpoints={{
           640: {
             slidesPerView: 3,
@@ -130,7 +135,7 @@ const Home = () => {
         {topRatedMovie.map((movie, index) => (
           <SwiperSlide key={index}>
             <Suspense fallback={<Loader />}>
-              <MovieCard movie={movie} />
+              <MovieCard movie={movie} className='focus:ring-0' />
             </Suspense>
           </SwiperSlide>
         ))}
@@ -145,10 +150,11 @@ const Home = () => {
   const UpcomingMovieList = () => {
     return upcomingMovie.length > 0 ? (
       <Swiper
-        modules={[Pagination, A11y]}
+        modules={[Pagination, Mousewheel]}
         spaceBetween={15}
         slidesPerView={2}
         pagination={{ clickable: true, dynamicBullets: true }}
+        mousewheel={{ invert: true }}
         breakpoints={{
           640: {
             slidesPerView: 3,
@@ -165,7 +171,7 @@ const Home = () => {
         {upcomingMovie.map((movie, index) => (
           <SwiperSlide key={index}>
             <Suspense fallback={<Loader />}>
-              <MovieCard movie={movie} />
+              <MovieCard movie={movie} className='focus:ring-0' />
             </Suspense>
           </SwiperSlide>
         ))}
@@ -207,7 +213,7 @@ const Home = () => {
 
       <div className='container mx-auto p-5 lg:p-10 text-center mt-5 mb-10'>
         <p className='text-slate-200 max-w-3xl text-center mx-auto mb-7'>Come on, explore the complete list of films and find recommendations for your favorite films. Make your free time more enjoyable with us!</p>
-        <Link to='/movies' className='bg-cyan-500 text-slate-800 font-semibold px-4 py-2 rounded-lg outline-none hover:bg-cyan-400 focus:ring-[3px] focus:ring-cyan-300 focus:border focus:border-slate-800 mx-auto'>
+        <Link to='/movies' className='bg-cyan-500 text-slate-800 font-semibold px-4 py-3 rounded-lg outline-none hover:bg-cyan-400 focus:ring-[3px] focus:ring-cyan-300 focus:border-[1.4px] focus:border-slate-800 mx-auto'>
           <span>Expore More</span>
           <FontAwesomeIcon icon={['fas', 'arrow-right']} className='ms-2' />
         </Link>
