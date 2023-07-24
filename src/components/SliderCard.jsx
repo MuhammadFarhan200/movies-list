@@ -47,7 +47,7 @@ const SliderCard = ({ movie, className }) => {
           </div>
           <p className='text-white text-sm mt-3 hidden lg:block'>{`${movie.overview.substring(0, 100)}...`}</p>
         </div>
-        <img src={`${import.meta.env.VITE_IMG_URL}/${movie.poster_path}`} alt={movie.title}
+        <img src={`${import.meta.env.VITE_IMG_URL}/w500${movie.poster_path}`} alt={movie.title}
           className='rounded-lg w-full h-full text-slate-200' />
       </Link>
     </div>
