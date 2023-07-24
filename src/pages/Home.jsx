@@ -3,14 +3,13 @@ import { getMovieList } from "../utils/Api";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Mousewheel } from "swiper/modules"
+import { Pagination } from "swiper/modules"
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Loader from "../utils/Loader";
 import "@fortawesome/fontawesome-free-solid";
 import "swiper/css";
 import "swiper/css/pagination"
-import "swiper/css/mousewheel"
 
 const MovieCard = React.lazy(() => import('../components/MovieCard'))
 // const SliderCard = React.lazy(() => import('../components/SliderCard'))
@@ -42,11 +41,10 @@ const Home = () => {
   const NowPlayingMovieList = () => {
     return nowPlayingMovie.length > 0 ? (
       <Swiper
-        modules={[Pagination, Mousewheel]}
+        modules={[Pagination]}
         spaceBetween={15}
         slidesPerView={2}
         pagination={{ clickable: true, dynamicBullets: true }}
-        mousewheel={{ invert: true }}
         breakpoints={{
           640: {
             slidesPerView: 4,
@@ -78,11 +76,10 @@ const Home = () => {
   const PopularMovieList = () => {
     return popularMovie.length > 0 ? (
       <Swiper
-        modules={[Pagination, Mousewheel]}
+        modules={[Pagination]}
         spaceBetween={15}
         slidesPerView={2}
         pagination={{ clickable: true, dynamicBullets: true }}
-        mousewheel={{ invert: true }}
         breakpoints={{
           640: {
             slidesPerView: 3,
@@ -114,11 +111,10 @@ const Home = () => {
   const TopRatedMovieList = () => {
     return topRatedMovie.length > 0 ? (
       <Swiper
-        modules={[Pagination, Mousewheel]}
+        modules={[Pagination]}
         spaceBetween={15}
         slidesPerView={2}
         pagination={{ clickable: true, dynamicBullets: true }}
-        mousewheel={{ invert: true }}
         breakpoints={{
           640: {
             slidesPerView: 3,
@@ -150,11 +146,10 @@ const Home = () => {
   const UpcomingMovieList = () => {
     return upcomingMovie.length > 0 ? (
       <Swiper
-        modules={[Pagination, Mousewheel]}
+        modules={[Pagination]}
         spaceBetween={15}
         slidesPerView={2}
         pagination={{ clickable: true, dynamicBullets: true }}
-        mousewheel={{ invert: true }}
         breakpoints={{
           640: {
             slidesPerView: 3,
