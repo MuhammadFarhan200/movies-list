@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getMovieDetail } from "../utils/Api";
 import { useParams, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilm, faCalendarAlt, faStar, faUsers, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -21,7 +22,7 @@ const MovieDetail = () => {
     })
   }, [movieId])
 
-  const releaseDate = new Date(movie.release_date)
+  const releaseDate = new Date(movie.release_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
   const productionCompany = movie.production_companies
   const productionCountry = movie.production_countries
 
@@ -42,21 +43,21 @@ const MovieDetail = () => {
                 <tbody>
                   <tr>
                     <td className='py-1 pe-12'>
-                      <FontAwesomeIcon icon={['fas', 'film']} className='me-2' />
+                      <FontAwesomeIcon icon={faFilm} className='me-2' />
                       {movie.status}
                     </td>
                     <td className='py-1 ps-12'>
-                      <FontAwesomeIcon icon={['fas', 'users']} className='me-2' />
+                      <FontAwesomeIcon icon={faUsers} className='me-2' />
                       {movie.popularity} Popularity
                     </td>
                   </tr>
                   <tr>
                     <td className='py-1 pe-12'>
-                      <FontAwesomeIcon icon={['fas', 'calendar-alt']} className='me-2' />
-                      {releaseDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                      <FontAwesomeIcon icon={faCalendarAlt} className='me-2' />
+                      {releaseDate}
                     </td>
                     <td className='py-1 ps-12'>
-                      <FontAwesomeIcon icon={['fas', 'star']} className='me-2' /> 
+                      <FontAwesomeIcon icon={faStar} className='me-2' /> 
                       {movie.vote_average} ({movie.vote_count} Votes)
                     </td>
                   </tr>
@@ -71,12 +72,12 @@ const MovieDetail = () => {
         <div className='lg:hidden'>
           <h1 className='text-sky-500 text-2xl md:text-4xl font-semibold mb-5'>{movie.title}</h1>
             <p className='text-slate-200 text-lg mb-2'>
-              <FontAwesomeIcon icon={['fas', 'film']} className='me-2' />
+              <FontAwesomeIcon icon={faFilm} className='me-2' />
               {movie.status}
             </p>
             <p className='text-slate-200 text-lg'>
-              <FontAwesomeIcon icon={['fas', 'calendar-alt']} className='me-2' />
-              {releaseDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+              <FontAwesomeIcon icon={faCalendarAlt} className='me-2' />
+              {releaseDate}
             </p>
         </div>
         <p className='text-slate-200 text-lg my-3'>{movie.overview}</p>
@@ -118,7 +119,7 @@ const MovieDetail = () => {
         </div>
 
         <button onClick={() => history.back()} className='block w-fit button py-3 my-5 ms-auto'>
-          <FontAwesomeIcon icon={['fas', 'arrow-left']} className='me-1' /> Back to Before
+          <FontAwesomeIcon icon={faArrowLeft} className='me-1' /> Back to Before
         </button>
       </div>
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getGenreMovie } from "../utils/Api";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -100,7 +101,7 @@ const Genres = () => {
             onClick={handleClickFilter}
           >
             <span className='font-semibold'>Apply Filter</span>
-            <FontAwesomeIcon icon={['fas', 'filter']} className='text-sm ms-2' />
+            <FontAwesomeIcon icon={faFilter} className='text-sm ms-2' />
           </button>
         </div>
       </div>

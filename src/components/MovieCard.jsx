@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getGenreMovie } from "../utils/Api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarAlt, faStar } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from 'prop-types';
 
 const MovieCard = ({ movie, className }) => {
@@ -24,11 +25,11 @@ const MovieCard = ({ movie, className }) => {
         <h3 className='text-white line-clamp-2 lg:line-clamp-1 text-md font-semibold'>{movie.title}</h3>
         <div className='flex justify-between mt-3 px-3'>
           <p className='text-white text-sm font-semibold'>
-            <FontAwesomeIcon icon={['fas', 'calendar-alt']} className='me-1' />
+            <FontAwesomeIcon icon={faCalendarAlt} className='me-1' />
             {releaseDate}
             </p>
           <p className='text-white text-sm font-semibold'>
-            <FontAwesomeIcon icon={['fas', 'star']} className='me-1' />
+            <FontAwesomeIcon icon={faStar} className='me-1' />
             {movie.vote_average}
             </p>
         </div>

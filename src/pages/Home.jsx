@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules"
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Loader from "../utils/Loader";
-import "@fortawesome/fontawesome-free-solid";
 import "swiper/css";
 import "swiper/css/pagination"
 
@@ -209,7 +209,7 @@ const Home = () => {
         <p className='text-slate-200 max-w-3xl text-center mx-auto mb-7'>Come on, explore the complete list of films and find recommendations for your favorite films. Make your free time more enjoyable with us!</p>
         <Link to='/movies' className='bg-cyan-500 text-slate-800 font-semibold px-4 py-3 rounded-lg outline-none hover:bg-cyan-400 focus:ring-[3px] focus:ring-cyan-300 focus:border-[1.4px] focus:border-slate-800 mx-auto'>
           <span>Expore More</span>
-          <FontAwesomeIcon icon={['fas', 'arrow-right']} className='ms-2' />
+          <FontAwesomeIcon icon={faArrowRight} className='ms-2' />
         </Link>
       </div>
       

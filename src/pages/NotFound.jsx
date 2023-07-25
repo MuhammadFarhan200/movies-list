@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
@@ -23,7 +24,7 @@ const NotFound = () => {
           Maybe you can try something else?
         </p>
         <Link to='/' className='inline-block button font-medium mx-auto mt-6'>
-          <FontAwesomeIcon icon={['fas', 'arrow-left']} className='mr-2' />
+          <FontAwesomeIcon icon={faArrowLeft} className='mr-2' />
           <span className='text-lg'>Go to Home</span>
         </Link>
       </div>

@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { getMovieList, searchMovie, getDiscoverMovie, getGenreMovie } from "../utils/Api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch, faTimes, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Loader from "../utils/Loader";
@@ -183,7 +184,7 @@ const Movies = () => {
             autoComplete="off"
             value={isSearch ? searchQuery : ''}
           />
-          <FontAwesomeIcon icon={['fas', 'search']} className='absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-300' id='search-icon' />
+          <FontAwesomeIcon icon={faSearch} className='absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-300' id='search-icon' />
         </div>
         {genreId.length > 0 ? (
           <>
@@ -192,7 +193,7 @@ const Movies = () => {
               <button type='button' className='button'
                 onClick={() => handleRemoveFilter()}
               >
-                <FontAwesomeIcon icon={['fas', 'times']} className='me-2' />
+                <FontAwesomeIcon icon={faTimes} className='me-2' />
                 <span className='whitespace-nowrap'>Clear Filter</span>
               </button>
             </div>
@@ -214,7 +215,7 @@ const Movies = () => {
                 onClick={() => handleChangePage(currentPage - 1)}
                 disabled={currentPage === 1}
               >
-                <FontAwesomeIcon icon={['fas', 'chevron-left']} className='me-2' />
+                <FontAwesomeIcon icon={faChevronLeft} className='me-2' />
                 <span>Prev</span>
               </button>
               <button type='button' name='first' className={`${currentPage > 10 ? 'inline-block' : 'hidden'} button`}
@@ -252,7 +253,7 @@ const Movies = () => {
                 disabled={currentPage === totalPages}
               >
                 <span>Next</span>
-                <FontAwesomeIcon icon={['fas', 'chevron-right']} className='ms-2' />
+                <FontAwesomeIcon icon={faChevronRight} className='ms-2' />
               </button>
             </div>
             <div className={`${isSearch ? 'flex' : 'hidden'} flex-wrap justify-center items-center gap-2 mb-5 sm:mb-3`}>
