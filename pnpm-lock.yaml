@@ -5,9 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@fortawesome/fontawesome-free-solid':
-    specifier: ^5.0.13
-    version: 5.0.13
   '@fortawesome/fontawesome-svg-core':
     specifier: ^6.4.0
     version: 6.4.0
@@ -36,8 +33,8 @@ dependencies:
     specifier: ^6.14.2
     version: 6.14.2(react-dom@18.2.0)(react@18.2.0)
   sweetalert2:
-    specifier: ^11.7.20
-    version: 11.5.21
+    specifier: ^11.5.21
+    version: 11.7.20
   swiper:
     specifier: ^10.0.4
     version: 10.0.4
@@ -550,23 +547,10 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@fortawesome/fontawesome-common-types@0.1.7:
-    resolution: {integrity: sha512-ego8jRVSHfq/iq4KRZJKQeUAdi3ZjGNrqw4oPN3fNdvTBnLCSntwVCnc37bsAJP9UB8MhrTfPnZYxkv2vpS4pg==}
-    engines: {node: '>=6'}
-    dev: false
-
   /@fortawesome/fontawesome-common-types@6.4.0:
     resolution: {integrity: sha512-HNii132xfomg5QVZw0HwXXpN22s7VBHQBv9CeOu9tfJnhsWQNd2lmTNi8CSrnw5B+5YOmzu1UoPAyxaXsJ6RgQ==}
     engines: {node: '>=6'}
     requiresBuild: true
-    dev: false
-
-  /@fortawesome/fontawesome-free-solid@5.0.13:
-    resolution: {integrity: sha512-b+krVnqkdDt52Yfev0x0ZZgtxBQsLw00Zfa3uaVWIDzpNZVtrEXuxldUSUaN/ihgGhSNi8VpvDAdNPVgCKOSxw==}
-    engines: {node: '>=6'}
-    deprecated: This package is deprecated. See https://git.io/fNCzJ for information about upgrading.
-    dependencies:
-      '@fortawesome/fontawesome-common-types': 0.1.7
     dev: false
 
   /@fortawesome/fontawesome-svg-core@6.4.0:

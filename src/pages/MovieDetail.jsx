@@ -22,6 +22,8 @@ const MovieDetail = () => {
   }, [movieId])
 
   const releaseDate = new Date(movie.release_date)
+  const productionCompany = movie.production_companies
+  const productionCountry = movie.production_countries
 
   return (
     <>
@@ -94,22 +96,22 @@ const MovieDetail = () => {
           <p className='text-slate-200 text-lg my-3'>Original Languange: <span className='uppercase'>{movie.original_language}</span></p>
           <p className='text-slate-200 text-lg my-3'>Duration: {movie.runtime} minutes</p>
           <div className='flex flex-wrap my-3 text-slate-200 text-lg'>Production Companies:&nbsp;
-            {movie.production_companies?.map((company, index) => {
+            {productionCompany?.length > 0 ? productionCompany?.map((company, index) => {
               return (
                 <span key={company.id}>
-                  {company.name}{index !== movie.production_companies.length - 1 ? ',\u00A0' : ''}
+                  {company.name}{index !== productionCompany.length - 1 ? ',\u00A0' : ''}
                 </span>
               )
-            })}
+            }) : '-'}
           </div>
           <div className='flex flex-wrap my-3 text-slate-200 text-lg'>Production Countries:&nbsp;
-            {movie.production_countries?.map((country, index) => {
+            {productionCountry?.length > 0 ? productionCountry?.map((country, index) => {
               return (
                 <span key={country.iso_3166_1}>
-                  {country.name}{index !== movie.production_countries.length - 1 ? ',\u00A0' : ''}
+                  {country.name}{index !== productionCountry?.length - 1 ? ',\u00A0' : ''}
                 </span>
               )
-            })}
+            }) : '-'}
           </div>
           <p className='lg:hidden text-slate-200 text-lg my-3'>Popularity: {movie.popularity}</p>
           <p className='lg:hidden text-slate-200 text-lg my-3'>Rating: {movie.vote_average} ({movie.vote_count} Votes)</p>

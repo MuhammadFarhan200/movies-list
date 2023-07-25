@@ -12,7 +12,6 @@ import "swiper/css";
 import "swiper/css/pagination"
 
 const MovieCard = React.lazy(() => import('../components/MovieCard'))
-// const SliderCard = React.lazy(() => import('../components/SliderCard'))
 
 const Home = () => {
   const [topRatedMovie, setTopRatedMovie] = useState([])

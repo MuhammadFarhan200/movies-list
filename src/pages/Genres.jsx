@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { getGenreMovie } from "../utils/Api";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -28,8 +27,7 @@ const Genres = () => {
     }
   }
 
-  const handleClickFilter = (e) => {
-    e.preventDefault()
+  const handleClickFilter = () => {
     if (selectedGenres.length < 1) {
       showNotification("warning", "Please select at least one genre!")
     } else {
@@ -97,15 +95,13 @@ const Genres = () => {
           ))}
         </div>
         <div className='text-end mb-10'>
-          <Link
-            role="button"
-            to='#'
+          <button
             className='button-primary py-3'
             onClick={handleClickFilter}
           >
             <span className='font-semibold'>Apply Filter</span>
             <FontAwesomeIcon icon={['fas', 'filter']} className='text-sm ms-2' />
-          </Link>
+          </button>
         </div>
       </div>
 
