@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { getGenreMovie } from "../utils/Api";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
+import "animate.css"
 
 const Genres = () => {
   const [genres, setGenres] = useState([])
@@ -53,6 +54,12 @@ const Genres = () => {
         title: "swal-title",
         icon: "swal-icon",
         popup: "swal-popup",
+      },
+      showClass: {
+        popup: "animate__animated animate__fadeInDown animate__faster",
+      },
+      hideClass: {
+        popup: "animate__animated animate__fadeOutUp animate__faster",
       },
       position: "top-end",
       width: "400px",

@@ -22,15 +22,14 @@ const MovieDetail = () => {
   }, [movieId])
 
   const releaseDate = new Date(movie.release_date)
-  // console.log(movie);
 
   return (
     <>
       <Navbar />
-      <div className={`relative w-full h-[350px] lg:h-[400px]`} style={{ backgroundImage: `url(${import.meta.env.VITE_IMG_URL}/original${movie.backdrop_path})`, backgroundSize: 'cover', backgroundPosition: 'top center' }}>
+      <div className={`relative w-full h-[350px] lg:h-[400px]`} style={{ backgroundImage: `url(${import.meta.env.VITE_IMG_URL}/original/${movie.backdrop_path})`, backgroundSize: 'cover', backgroundPosition: 'top center' }}>
         <div className='absolute bg-black opacity-70 w-full h-full'></div>
         <div className='flex justify-center items-center gap-10 w-fit absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
-          <img src={`${import.meta.env.VITE_IMG_URL}/w500${movie.poster_path}`} alt={movie.title}  
+          <img src={`${import.meta.env.VITE_IMG_URL}/w500/${movie.poster_path}`} alt={movie.title}  
             className='rounded-lg w-48 mt-3 lg:my-3 text-slate-200 shadow-xl'
           />
           <div className='hidden lg:block'>
@@ -89,7 +88,7 @@ const MovieDetail = () => {
             })}
           </div>
           <p className='text-slate-200 text-lg my-3 overflow-hidden whitespace-nowrap text-ellipsis'>Official Site:&nbsp; 
-            <Link to={movie.homepage} className='text-sky-500 hover:underline' target='_blank'>{movie.homepage}</Link>
+            {movie.homepage == "" ? '-' : <Link to={movie.homepage} className='text-sky-500 hover:underline' target='_blank'>{movie.homepage}</Link>}
           </p>
           <p className='text-slate-200 text-lg my-3'>Original Languange: <span className='uppercase'>{movie.original_language}</span></p>
           <p className='text-slate-200 text-lg my-3'>Duration: {movie.runtime} minutes</p>
