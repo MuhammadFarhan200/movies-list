@@ -26,7 +26,7 @@ const About = () => {
         </p>
         <p className='text-slate-200 text-lg'>
           Email: <span className='text-sky-500'>
-            <Link to='mailto:farhannsrllh177@gmail.com' target="_blank" className='font-medium text-sky-500 hover:underline outline-none'>farhannsrllh177@gmail.com</Link>
+            <Link to='mailto:farhannsrllh177@gmail.com' className='font-medium text-sky-500 hover:underline outline-none'>farhannsrllh177@gmail.com</Link>
           </span>
         </p>
         <p className='text-slate-200 text-lg mb-3 md:mb-5'>
