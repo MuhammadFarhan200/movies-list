@@ -26,6 +26,7 @@ const MovieDetail = () => {
   return (
     <>
       <Navbar />
+      
       <div className={`relative w-full h-[350px] lg:h-[400px]`} style={{ backgroundImage: `url(${import.meta.env.VITE_IMG_URL}/original/${movie.backdrop_path})`, backgroundSize: 'cover', backgroundPosition: 'top center' }}>
         <div className='absolute bg-black opacity-70 w-full h-full'></div>
         <div className='flex justify-center items-center gap-10 w-fit absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
