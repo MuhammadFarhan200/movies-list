@@ -92,7 +92,7 @@ const Genres = () => {
         <div className='text-end mb-10'>
           <Link
             role="button"
-            to={selectedGenres.length < 1 ? '#' : '/movies'}
+            to='#'
             className='button-primary py-3'
             onClick={handleClickFilter}
           >

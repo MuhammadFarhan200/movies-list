@@ -78,7 +78,7 @@
     @apply w-[30px] h-[2px] my-2 block bg-slate-200 transition-all duration-300 ease-in-out
   }
   .nav-link {
-    @apply block text-base whitespace-nowrap text-slate-200 font-medium px-5 py-3 lg:py-0 hover:text-cyan-500 hover:bg-slate-700 lg:hover:bg-transparent outline-none focus:outline-none transition-all
+    @apply block text-base whitespace-nowrap text-slate-200 font-medium px-5 py-3 lg:py-0 hover:text-sky-500 hover:bg-slate-700 hover:lg:bg-transparent outline-none focus:outline-none transition-all
   }
 
   .button {
@@ -90,7 +90,7 @@
   }
 
   .active {
-    @apply text-cyan-500
+    @apply text-sky-500
   }
 
   .non-active {

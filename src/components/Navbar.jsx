@@ -53,7 +53,7 @@ const Navbar = () => {
               <Link to='/movies' className={`nav-link ${path == '/movies' || path.startsWith('/movie') ? 'active' : ''}`} onClick={handleClickNav}>Movies</Link>
             </li>
             <li className='group w-full h-full'>
-              <Link to='#' className='nav-link non-active'>About Us</Link>
+              <Link to='/about' className={`nav-link ${path === '/about' ? 'active' : ''}`}>About Us</Link>
             </li>
           </ul>
         </nav>
