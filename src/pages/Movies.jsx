@@ -91,7 +91,6 @@ const Movies = () => {
   } 
 
   const handleChangePage = (pageNumber) => {
-    // window.scrollTo(0, 0)
     if (isSearch) {
       setCurrentPageSearch(pageNumber)
       sessionStorage.setItem('pageSearch', pageNumber)
@@ -215,7 +214,8 @@ const Movies = () => {
                 onClick={() => handleChangePage(currentPage - 1)}
                 disabled={currentPage === 1}
               >
-                Prev
+                <FontAwesomeIcon icon={['fas', 'chevron-left']} className='me-2' />
+                <span>Prev</span>
               </button>
               <button type='button' name='first' className={`${currentPage > 10 ? 'inline-block' : 'hidden'} button`}
                 onClick={() => handleChangePage(1)}
@@ -251,7 +251,8 @@ const Movies = () => {
                 onClick={() => handleChangePage(currentPage + 1)}
                 disabled={currentPage === totalPages}
               >
-                Next
+                <span>Next</span>
+                <FontAwesomeIcon icon={['fas', 'chevron-right']} className='ms-2' />
               </button>
             </div>
             <div className={`${isSearch ? 'flex' : 'hidden'} flex-wrap justify-center items-center gap-2 mb-5 sm:mb-3`}>
