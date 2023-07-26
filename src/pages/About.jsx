@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 const About = () => {
   useEffect(() => {
@@ -31,12 +34,16 @@ const About = () => {
          If you have any questions or feedback, don&apos;t hesitate to contact us.
         </p>
         <p className='text-slate-200'>
-          Email: <span className='text-sky-500'>
-            <Link to='mailto:farhannsrllh177@gmail.com' className='font-medium text-sky-500 hover:underline outline-none'>farhannsrllh177@gmail.com</Link>
-          </span>
+          <Link to='mailto:farhannsrllh177@gmail.com' className='hover:text-sky-500 hover:underline outline-none'>
+            <FontAwesomeIcon icon={faEnvelope} className='text-xl mr-2' />
+            farhannsrllh177@gmail.com
+          </Link>
         </p>
         <p className='text-slate-200 mb-3 md:mb-5'>
-          Phone: <span className='font-medium text-sky-500'>+62 812-3456-7890</span>
+          <Link to='https://github.com/MuhammadFarhan200' target="_blank" className='hover:text-sky-500 hover:underline outline-none'>
+          <FontAwesomeIcon icon={faGithub} className='text-xl mr-2' />
+            MuhammadFarhan200
+          </Link>
         </p>
         <p className='text-slate-200 mb-8'>
           Enjoy your time on our website!✨🎉
