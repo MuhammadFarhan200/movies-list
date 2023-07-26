@@ -10,6 +10,9 @@ const MovieDetail = () => {
   const [movie, setMovie] = useState([])
   const { movieId } = useParams()
   const genreMovie = movie.genres
+  const releaseDate = new Date(movie.release_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+  const productionCompany = movie.production_companies
+  const productionCountry = movie.production_countries
 
   useEffect(() => {
     document.title = 'MList | ' + movie.title ?? '-'
@@ -21,10 +24,6 @@ const MovieDetail = () => {
       setMovie(res)
     })
   }, [movieId])
-
-  const releaseDate = new Date(movie.release_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-  const productionCompany = movie.production_companies
-  const productionCountry = movie.production_countries
 
   return (
     <>
@@ -70,7 +69,7 @@ const MovieDetail = () => {
 
       <div className='container mx-auto p-5 sm:p-10'>
         <div className='lg:hidden'>
-          <h1 className='text-sky-500 text-2xl md:text-4xl font-semibold mb-5'>{movie.title}</h1>
+          <h1 className='text-sky-500 text-2xl md:text-3xl font-semibold mb-5'>{movie.title}</h1>
             <p className='text-slate-200 text-lg mb-2'>
               <FontAwesomeIcon icon={faFilm} className='me-2' />
               {movie.status}
@@ -83,13 +82,13 @@ const MovieDetail = () => {
         <p className='text-slate-200 text-lg my-3'>{movie.overview}</p>
         <div className='bg-slate-800 rounded-xl p-4 mt-7 mb-10'>
           <div className='flex flex-wrap my-3 text-slate-200 text-lg'>Genre:&nbsp;
-            {genreMovie?.map((genre, index) => {
+            {genreMovie?.length > 0 ? genreMovie?.map((genre, index) => {
               return (
                 <span key={genre.id}>
                   {genre.name}{index !== genreMovie.length - 1 ? ',\u00A0' : ''}
                 </span>
               );
-            })}
+            }) : '-'}
           </div>
           <p className='text-slate-200 text-lg my-3 overflow-hidden whitespace-nowrap text-ellipsis'>Official Site:&nbsp; 
             {movie.homepage == "" ? '-' : <Link to={movie.homepage} className='text-sky-500 hover:underline' target='_blank'>{movie.homepage}</Link>}

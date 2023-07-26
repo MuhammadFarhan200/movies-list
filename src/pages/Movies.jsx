@@ -32,36 +32,45 @@ const Movies = () => {
     if (sessionSearch) {
       setIsSearch(true)
       setSearchQuery(sessionSearch)
-      sessionPageSearch ? setCurrentPageSearch(parseInt(sessionPageSearch)) : setCurrentPageSearch(1)
+      setCurrentPageSearch(sessionPageSearch ? parseInt(sessionPageSearch) : 1);
       searchMovie(sessionSearch, currentPageSearch).then((res) => {
         setPopularMovie(res.results)
         setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
       })
+      if (parseInt(sessionPageSearch) > 5) {
+        setStartIndex(parseInt(sessionPageSearch) - 5);
+        setEndIndex(parseInt(sessionPageSearch) + 5);
+      }
     } else {
       setIsSearch(false)
-      sessionPage ? setCurrentPage(parseInt(sessionPage)) : setCurrentPage(1)
+      sessionStorage.removeItem('pageSearch')
       if (sessionGenreId) {
+        setCurrentPage(sessionPage ? parseInt(sessionPage) : 1)
         setGenreId(sessionGenreId)
         const parseGenreId = JSON.parse(sessionGenreId)
-        getDiscoverMovie(currentPage, parseGenreId).then((res) => {
-          setPopularMovie(res.results)
-          setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
-        })
         getGenreMovie().then((res) => {
-          setGenreMovie(res.filter((genre) => genreId.includes(genre.id)))
+          setGenreMovie(res.filter((genre) => parseGenreId.includes(genre.id)))
         })
-      } else {
-        getMovieList(currentPage, 'popular').then((res) => {
+        getDiscoverMovie(parseInt(sessionPage), parseGenreId).then((res) => {
           setPopularMovie(res.results)
           setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
         })
-        if (currentPage > 5) {
+        if (parseInt(sessionPage) > 5) {
+          setStartIndex(parseInt(sessionPage) - 5);
+          setEndIndex(parseInt(sessionPage) + 5);
+        }
+      } else {
+        setCurrentPage(sessionPage ? parseInt(sessionPage) : 1);
+        getMovieList(parseInt(sessionPage), 'popular').then((res) => {
+          setPopularMovie(res.results)
+          setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
+        })
+        if (parseInt(sessionPage) > 5) {
           setStartIndex(currentPage - 5);
           setEndIndex(currentPage + 5);
         }
       }
     }
-
   }, [currentPage, currentPageSearch, genreId])
 
   const search = async (q) => {
@@ -80,11 +89,11 @@ const Movies = () => {
       sessionStorage.setItem('pageSearch', 1)
       setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
       setStartIndex(0);
+      setEndIndex(10);
     } else {
       setIsSearch(false)
       sessionStorage.removeItem('searchQuery')
-      setCurrentPage(1)
-      getMovieList(currentPage, 'popular').then((res) => {
+      getMovieList(1, 'popular').then((res) => {
         setPopularMovie(res.results)
         setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
       })
@@ -95,34 +104,16 @@ const Movies = () => {
     if (isSearch) {
       setCurrentPageSearch(pageNumber)
       sessionStorage.setItem('pageSearch', pageNumber)
-      searchMovie(searchQuery, pageNumber).then((res) => {
-        setPopularMovie(res.results)
-        setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
-      })
-    } else if (genreId !== null) {
-      setCurrentPage(pageNumber)
-      sessionStorage.setItem('currentPagePopular', pageNumber)
-      getDiscoverMovie(pageNumber, genreId).then((res) => {
-        setPopularMovie(res.results)
-        setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
-      })
-      getGenreMovie().then((res) => {
-        setGenreMovie(res.filter((genre) => genre.id === parseInt(genreId)))
-      }) 
-      if (pageNumber > 5) {
-        setStartIndex(pageNumber - 5);
-        setEndIndex(pageNumber + 5);
-      } else {
-        setStartIndex(0);
-        setEndIndex(10);
-      }
     } else {
-      setCurrentPage(pageNumber)
       sessionStorage.setItem('currentPagePopular', pageNumber)
-      getMovieList(pageNumber, 'popular').then((res) => {
-        setPopularMovie(res.results)
-        setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
-      })
+      const sessionGenreId = sessionStorage.getItem('genreId')
+      setCurrentPage(pageNumber)
+      if (sessionGenreId) {
+        const parseGenreId = JSON.parse(sessionGenreId)
+        getGenreMovie().then((res) => {
+          setGenreMovie(res.filter((genre) => parseGenreId.includes(genre.id)))
+        })
+      }
       if (pageNumber > 5) {
         setStartIndex(pageNumber - 5);
         setEndIndex(pageNumber + 5);
@@ -143,7 +134,7 @@ const Movies = () => {
     sessionStorage.removeItem('currentPagePopular')
     setCurrentPage(1)
     setGenreId([])
-    getMovieList(currentPage, 'popular').then((res) => {
+    getMovieList(1, 'popular').then((res) => {
       setPopularMovie(res.results)
       setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
     })
