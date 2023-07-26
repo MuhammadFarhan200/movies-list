@@ -70,18 +70,18 @@ const MovieDetail = () => {
       <div className='container mx-auto p-5 sm:p-10'>
         <div className='lg:hidden'>
           <h1 className='text-sky-500 text-2xl md:text-3xl font-semibold mb-5'>{movie.title}</h1>
-            <p className='text-slate-200 text-lg mb-2'>
+            <p className='text-slate-200 lg:text-lg mb-2'>
               <FontAwesomeIcon icon={faFilm} className='me-2' />
               {movie.status}
             </p>
-            <p className='text-slate-200 text-lg'>
+            <p className='text-slate-200 lg:text-lg'>
               <FontAwesomeIcon icon={faCalendarAlt} className='me-2' />
               {releaseDate}
             </p>
         </div>
-        <p className='text-slate-200 text-lg my-3'>{movie.overview}</p>
+        <p className='text-slate-200 lg:text-lg my-3'>{movie.overview}</p>
         <div className='bg-slate-800 rounded-xl p-4 mt-7 mb-10'>
-          <div className='flex flex-wrap my-3 text-slate-200 text-lg'>Genre:&nbsp;
+          <div className='flex flex-wrap my-3 text-slate-200 lg:text-lg'>Genre:&nbsp;
             {genreMovie?.length > 0 ? genreMovie?.map((genre, index) => {
               return (
                 <span key={genre.id}>
@@ -90,12 +90,12 @@ const MovieDetail = () => {
               );
             }) : '-'}
           </div>
-          <p className='text-slate-200 text-lg my-3 overflow-hidden whitespace-nowrap text-ellipsis'>Official Site:&nbsp; 
+          <p className='text-slate-200 lg:text-lg my-3 overflow-hidden whitespace-nowrap text-ellipsis'>Official Site:&nbsp; 
             {movie.homepage == "" ? '-' : <Link to={movie.homepage} className='text-sky-500 hover:underline' target='_blank'>{movie.homepage}</Link>}
           </p>
-          <p className='text-slate-200 text-lg my-3'>Original Languange: <span className='uppercase'>{movie.original_language}</span></p>
-          <p className='text-slate-200 text-lg my-3'>Duration: {movie.runtime} minutes</p>
-          <div className='flex flex-wrap my-3 text-slate-200 text-lg'>Production Companies:&nbsp;
+          <p className='text-slate-200 lg:text-lg my-3'>Original Languange: <span className='uppercase'>{movie.original_language}</span></p>
+          <p className='text-slate-200 lg:text-lg my-3'>Duration: {movie.runtime} minutes</p>
+          <div className='flex flex-wrap my-3 text-slate-200 lg:text-lg'>Production Companies:&nbsp;
             {productionCompany?.length > 0 ? productionCompany?.map((company, index) => {
               return (
                 <span key={company.id}>
@@ -104,7 +104,7 @@ const MovieDetail = () => {
               )
             }) : '-'}
           </div>
-          <div className='flex flex-wrap my-3 text-slate-200 text-lg'>Production Countries:&nbsp;
+          <div className='flex flex-wrap my-3 text-slate-200 lg:text-lg'>Production Countries:&nbsp;
             {productionCountry?.length > 0 ? productionCountry?.map((country, index) => {
               return (
                 <span key={country.iso_3166_1}>
@@ -113,8 +113,8 @@ const MovieDetail = () => {
               )
             }) : '-'}
           </div>
-          <p className='lg:hidden text-slate-200 text-lg my-3'>Popularity: {movie.popularity}</p>
-          <p className='lg:hidden text-slate-200 text-lg my-3'>Rating: {movie.vote_average} ({movie.vote_count} Votes)</p>
+          <p className='lg:hidden text-slate-200 lg:text-lg my-3'>Popularity: {movie.popularity}</p>
+          <p className='lg:hidden text-slate-200 lg:text-lg my-3'>Rating: {movie.vote_average} ({movie.vote_count} Votes)</p>
         </div>
 
         <button onClick={() => history.back()} className='block w-fit button py-3 my-5 ms-auto'>

@@ -32,7 +32,7 @@ const About = () => {
         <p className='text-slate-200 mb-3 md:mb-5'>
           Phone: <span className='font-medium text-sky-500'>+62 812-3456-7890</span>
         </p>
-        <p className='text-slate-200 mb-5'>
+        <p className='text-slate-200 mb-8'>
           Enjoy your time on our website!✨🎉
         </p>
       </div>
