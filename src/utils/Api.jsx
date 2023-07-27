@@ -24,7 +24,11 @@ export const getMovieDetail = async (id) => {
   return detail.data;
 }
 
-export const getDiscoverMovie = async (page, genreId) => {
-  const discover = await axios.get(`${baseUrl}/discover/movie?page=${page}&api_key=${apiKey}&with_genres=${genreId}`); // API URL
+export const getDiscoverMovie = async (page, genreId, sortBy) => {
+  const date = new Date()
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
+  const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
+  const discover = await axios.get(`${baseUrl}/discover/movie?page=${page}&api_key=${apiKey}&release_date.lte=${year}-${month}-${day}&sort_by=${sortBy ? sortBy : 'popularity.desc'}&with_genres=${genreId}`); // API URL
   return discover.data;
 }

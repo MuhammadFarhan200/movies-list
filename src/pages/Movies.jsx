@@ -5,6 +5,10 @@ import { faSearch, faTimes, faChevronLeft, faChevronRight } from "@fortawesome/f
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Loader from "../utils/Loader";
+import Modal from "../components/Modal";
+import Swal from "sweetalert2";
+import { faSliders } from "@fortawesome/free-solid-svg-icons";
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
 
 const MovieCard = React.lazy(() => import('../components/MovieCard'));
 
@@ -12,6 +16,7 @@ const Movies = () => {
   const [popularMovie, setPopularMovie] = useState([])
   const [genreMovie, setGenreMovie] = useState([])
   const [genreId, setGenreId] = useState([])
+  const [sortBy, setSortBy] = useState('')
   const [isSearch, setIsSearch] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
@@ -19,7 +24,10 @@ const Movies = () => {
   const [totalPages, setTotalPages] = useState()
   const [startIndex, setStartIndex] = useState(0)
   const [endIndex, setEndIndex] = useState(10)
+  const [isOpenModal, setIsOpenModal] = useState(false)
+  const [isFilter, setIsFilter] = useState(false)
 
+  
   useEffect(() => {
     document.title = 'MList | List of Movies'
     window.scrollTo(0, 0)
@@ -28,6 +36,7 @@ const Movies = () => {
     const sessionPage = sessionStorage.getItem('currentPagePopular')
     const sessionPageSearch = sessionStorage.getItem('pageSearch')
     const sessionGenreId = sessionStorage.getItem('genreId')
+    const sessionSortBy = sessionStorage.getItem('sortBy')
 
     if (sessionSearch) {
       setIsSearch(true)
@@ -44,14 +53,44 @@ const Movies = () => {
     } else {
       setIsSearch(false)
       sessionStorage.removeItem('pageSearch')
-      if (sessionGenreId) {
+      if (sessionGenreId && sessionSortBy) {
         setCurrentPage(sessionPage ? parseInt(sessionPage) : 1)
+        setIsFilter(true)
+        setGenreId(sessionGenreId)
+        setSortBy(sessionSortBy)
+        const parseGenreId = JSON.parse(sessionGenreId)
+        getGenreMovie().then((res) => {
+          setGenreMovie(res.filter((genre) => parseGenreId.includes(genre.id)))
+        })
+        getDiscoverMovie(parseInt(sessionPage), parseGenreId, sessionSortBy).then((res) => {
+          setPopularMovie(res.results)
+          setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
+        })
+        if (parseInt(sessionPage) > 5) {
+          setStartIndex(parseInt(sessionPage) - 5);
+          setEndIndex(parseInt(sessionPage) + 5);
+        }
+      } else if (sessionGenreId) {
+        setCurrentPage(sessionPage ? parseInt(sessionPage) : 1)
+        setIsFilter(true)
         setGenreId(sessionGenreId)
         const parseGenreId = JSON.parse(sessionGenreId)
         getGenreMovie().then((res) => {
           setGenreMovie(res.filter((genre) => parseGenreId.includes(genre.id)))
         })
         getDiscoverMovie(parseInt(sessionPage), parseGenreId).then((res) => {
+          setPopularMovie(res.results)
+          setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
+        })
+        if (parseInt(sessionPage) > 5) {
+          setStartIndex(parseInt(sessionPage) - 5);
+          setEndIndex(parseInt(sessionPage) + 5);
+        }
+      } else if (sessionSortBy) {
+        setIsFilter(true)
+        setSortBy(sessionSortBy)
+        setCurrentPage(sessionPage ? parseInt(sessionPage) : 1)
+        getDiscoverMovie(parseInt(sessionPage), '', sessionSortBy).then((res) => {
           setPopularMovie(res.results)
           setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
         })
@@ -73,13 +112,31 @@ const Movies = () => {
     }
   }, [currentPage, currentPageSearch, genreId])
 
+  const openModal = () => {
+    setIsOpenModal(true)
+  }
+
+  const closeModal = () => {
+    setIsOpenModal(false)
+  }
+
   const search = async (q) => {
     if (q.trim()) {
       setIsSearch(true)
+      setIsFilter(false)
       const sessionGenreId = sessionStorage.getItem('genreId')
-      if (sessionGenreId) {
+      const sessionSortBy = sessionStorage.getItem('sortBy')
+      if (sessionGenreId && sessionSortBy) {
+        sessionStorage.removeItem('sortBy')
+        setSortBy('')
         sessionStorage.removeItem('genreId')
         setGenreId([])
+      } else if (sessionGenreId) {
+        sessionStorage.removeItem('genreId')
+        setGenreId([])
+      } else if (sortBy) {
+        sessionStorage.removeItem('sortBy')
+        setSortBy('')
       }
       setSearchQuery(q)
       sessionStorage.setItem('searchQuery', q)
@@ -131,9 +188,12 @@ const Movies = () => {
   }
 
   const handleRemoveFilter = () => {
+    sessionStorage.removeItem('sortBy')
     sessionStorage.removeItem('genreId')
     sessionStorage.removeItem('currentPagePopular')
+    setIsFilter(false)
     setCurrentPage(1)
+    setSortBy('')
     setGenreId([])
     getMovieList(1, 'popular').then((res) => {
       setPopularMovie(res.results)
@@ -158,6 +218,132 @@ const Movies = () => {
       </div>
     )
   }
+
+  const FilterModal = () => {
+    const [genres, setGenres] = useState([])
+    const [selectedSort, setSelectedSort] = useState('')
+    const [selectedGenres, setSelectedGenres] = useState([])
+
+    useEffect(() => {
+      getGenreMovie().then((res) => {
+        setGenres(res)
+      })
+    }, [])
+
+    const handleClickFilter = () => {
+      if (selectedGenres.length < 1 && !selectedSort) {
+        showNotification("warning", "Please choose an order or at least one genre!")
+      } else {
+        sessionStorage.removeItem('searchQuery')
+        sessionStorage.removeItem('pageSearch')
+        sessionStorage.setItem('sortBy', selectedSort)
+        sessionStorage.setItem('genreId', JSON.stringify(selectedGenres))
+        sessionStorage.setItem('currentPagePopular', 1)
+        setIsFilter(true)
+        setGenreId(selectedGenres)
+        closeModal()
+      }
+    }
+
+    const handleClickSort = (sort) => {
+      if (selectedSort === sort) {
+        setSelectedSort('')
+      } else {
+        setSelectedSort(sort)
+      }
+    }
+
+    const handleClickGenre = (genreId) => {
+      if (selectedGenres.includes(genreId)) {
+        setSelectedGenres(selectedGenres.filter((genre) => genre !== genreId))
+      } else {
+        setSelectedGenres([...selectedGenres, genreId])
+      }
+    }
+
+    const showNotification = (icon, title) => {
+      let iconColor = "";
+      if (icon === "success") {
+        iconColor = "#06b6d4";
+      } else if (icon === "warning") {
+        iconColor = "#ffb700";
+      } else if (icon === "error") {
+        iconColor = "#ff0000";
+      }
+
+      Swal.fire({
+        customClass: {
+          title: "swal-title",
+          icon: "swal-icon",
+          popup: "swal-popup",
+        },
+        showClass: {
+          popup: "animate__animated animate__fadeInDown animate__faster",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp animate__faster",
+        },
+        position: "top-end",
+        width: "500px",
+        icon: icon,
+        title: title,
+        background: "#0f172a",
+        showConfirmButton: false,
+        showCloseButton: true,
+        iconColor: iconColor,
+        toast: true,
+        timer: 5000,
+      });
+    };
+    
+    return (
+      <Modal isOpen={isOpenModal} onClose={closeModal} title="Filter List Movie">
+        <div className='flex flex-col justify-center'>
+          <p className='text-slate-200 mb-3'>Sort by:</p>
+          <div className='flex flex-wrap text-sm gap-2 mb-6'>
+            <button
+              className={`px-4 py-2 rounded-lg ${selectedSort === 'popularity.desc' ? 'button-primary focus:border-0 focus:ring-2' : 'button bg-slate-700'}`}
+              onClick={() => handleClickSort('popularity.desc')}
+            >
+              Popular
+            </button>
+            <button
+              className={`px-4 py-2 rounded-lg ${selectedSort === 'vote_average.desc' ? 'button-primary focus:border-0 focus:ring-2' : 'button bg-slate-700'}`}
+              onClick={() => handleClickSort('vote_average.desc')}
+            >
+              Top Rated
+            </button>
+            <button
+              className={`px-4 py-2 rounded-lg ${selectedSort === 'primary_release_date.desc' ? 'button-primary focus:border-0 focus:ring-2' : 'button bg-slate-700'}`}
+              onClick={() => handleClickSort('primary_release_date.desc')}
+            >
+              Latest
+            </button>
+          </div>
+          <p className='text-slate-200 mb-3'>Filter by Genre:</p>
+          <div className='flex flex-wrap gap-2 mb-10'>
+            {genres.map((genre, index) => (
+              <button
+                key={index}
+                id={`genre-${genre.id}`}
+                className={`flex h-full text-sm justify-center items-center group ${selectedGenres.includes(genre.id) ? 'button-primary focus:border-0 focus:ring-2 text-slate-800 hover:text-slate-800' : 'button bg-slate-700'}`}
+                onClick={() => handleClickGenre(genre.id)}
+              >
+                {genre.name}
+              </button>
+            ))}
+          </div>
+          <button
+            className='button-primary text-sm py-3 ms-auto'
+            onClick={handleClickFilter}
+          >
+            <span className='font-medium'>Apply Filter</span>
+            <FontAwesomeIcon icon={faFilter} className='ms-2' />
+          </button>
+        </div>
+      </Modal>
+    )
+  }
   
   return (
     <>
@@ -166,36 +352,49 @@ const Movies = () => {
       <div className='container mx-auto p-5 lg:p-10' style={{ minHeight: 'calc(100vh - 136px)' }}>
         <h3 className='text-sky-500 text-2xl sm:text-3xl md:text-4xl text-center font-semibold my-6'>List of Movies</h3>
         <p className='text-slate-200 mb-6 max-w-3xl text-center mx-auto'>Come on, explore the complete list of film and find recommendations for your favorite films. Make your free time more enjoyable with us!</p>
-        <div className='relative flex mb-6 sm:mb-12 w-[100%] sm:w-fit mx-auto' id='search-container'>
-          <input
-            className='bg-slate-800 text-slate-200 w-full sm:w-[30rem] h-12 ps-11 pe-5 rounded-lg outline-none focus:ring-2 focus:ring-cyan-500'
-            type='search'
-            name='search'
-            placeholder='Type movie title here...'
-            onChange={(e) => search(e.target.value)}
-            autoComplete="off"
-            value={isSearch ? searchQuery : ''}
-          />
-          <FontAwesomeIcon icon={faSearch} className='absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-300' id='search-icon' />
+        <div className='flex mb-3 w-full sm:w-fit mx-auto space-x-3'>
+          <div className='relative flex w-full sm:w-fit' id='search-container'>
+            <input
+              className='bg-slate-800 text-slate-200 w-full sm:w-[30rem] h-12 ps-11 pe-5 rounded-lg outline-none focus:ring-2 focus:ring-cyan-500'
+              type='search'
+              name='search'
+              placeholder='Type movie title here...'
+              onChange={(e) => search(e.target.value)}
+              autoComplete="off"
+              value={isSearch ? searchQuery : ''}
+            />
+            <FontAwesomeIcon icon={faSearch} className='absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-300' id='search-icon' />
+          </div>
+          <button className='button ms-auto' onClick={openModal}>
+            <FontAwesomeIcon icon={faSliders} className='md:me-2' />
+            <span className='hidden md:inline-block'>Filter</span>
+          </button>
         </div>
-        {genreId.length > 0 ? (
-          <>
-            <div className='flex justify-between items-center mb-3'>
-              <p className='text-slate-200 text-lg'>Filter by Genre: </p>
+        <p className='text-slate-300 text-center mb-6 sm:mb-10 '><span className='font-medium'>Note:</span> Filter feature cannot be combined with searching</p>
+        <FilterModal />
+        {isFilter ? (
+          <div className='mb-7'>
+            <div className='flex justify-between items-start'>
+              <div>
+                <p className={`${sortBy ? 'block' : 'hidden'} text-slate-200 text-lg`}>
+                  Sort by: 
+                  <span className='bg-slate-800 text-cyan-500 text-[16px] px-4 py-2 rounded-lg outline-none ms-2'>{sortBy === 'popularity.desc' ? 'Popular' : sortBy === 'vote_average.desc' ? 'Top Rated' : sortBy === 'primary_release_date.desc' ? 'Latest' : 'Popular'}</span>  
+                </p>
+                <p className={`${genreId === '[]' || genreId.length < 1 ? 'hidden' : ''} text-slate-200 text-lg mt-3`}>Filter by Genre: </p>
+              </div>
               <button type='button' className='button'
                 onClick={() => handleRemoveFilter()}
               >
                 <FontAwesomeIcon icon={faTimes} className='me-2' />
-                <span className='whitespace-nowrap'>Clear Filter</span>
-              </button>
+                <span className='whitespace-nowrap'>Clear <span className='hidden md:inline'>Filter</span></span>
+              </button> 
             </div>
-            <div className='flex flex-wrap gap-2 mb-7'>
+            <div className={`${genreId === '[]' || genreId.length < 1 ? 'hidden' : ''} flex flex-wrap gap-2 mt-2`}>
               {genreMovie.map((genre, index) => (
                 <span key={index} className='bg-slate-800 text-cyan-500 px-4 py-2 rounded-lg outline-none'>{genre.name}</span>
               ))}
             </div>
-          </>
-          
+          </div>   
         ) : (<></>)}
         <PopularMovieList />
         {popularMovie.length < 1 ? (
@@ -222,7 +421,7 @@ const Movies = () => {
                 <button
                   key={page}
                   className={`px-4 py-2 rounded-lg ${
-                    currentPage === page ? "bg-cyan-500 text-white" : "bg-slate-800 text-slate-200 hover:text-cyan-500 focus:ring-2 focus:ring-cyan-500"
+                    currentPage === page ? "bg-cyan-500 text-white" : "bg-slate-800 text-slate-200 hover:text-cyan-500 focus:ring-2 focus:ring-cyan-500 outline-none"
                   }`}
                   onClick={() => handleChangePage(page)}
                 >

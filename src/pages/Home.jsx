@@ -34,7 +34,6 @@ const Home = () => {
     getMovieList(1, 'upcoming').then((res) => {
       setUpcomingMovie(res.results)
     })
-    // console.log(currentPage);
   }, [])
 
   const NowPlayingMovieList = () => {
