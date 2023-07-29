@@ -43,6 +43,7 @@ const MovieDetail = () => {
           modules={[Pagination]}
           spaceBetween={15}
           slidesPerView={2}
+          grabCursor={true}
           pagination={{ clickable: true, dynamicBullets: true }}
           breakpoints={{
             640: {

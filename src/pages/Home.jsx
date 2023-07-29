@@ -42,6 +42,7 @@ const Home = () => {
         modules={[Pagination]}
         spaceBetween={15}
         slidesPerView={2}
+        grabCursor={true}
         pagination={{ clickable: true, dynamicBullets: true }}
         breakpoints={{
           640: {
@@ -77,6 +78,7 @@ const Home = () => {
         modules={[Pagination]}
         spaceBetween={15}
         slidesPerView={2}
+        grabCursor={true}
         pagination={{ clickable: true, dynamicBullets: true }}
         breakpoints={{
           640: {
@@ -112,6 +114,7 @@ const Home = () => {
         modules={[Pagination]}
         spaceBetween={15}
         slidesPerView={2}
+        grabCursor={true}
         pagination={{ clickable: true, dynamicBullets: true }}
         breakpoints={{
           640: {
@@ -147,6 +150,7 @@ const Home = () => {
         modules={[Pagination]}
         spaceBetween={15}
         slidesPerView={2}
+        grabCursor={true}
         pagination={{ clickable: true, dynamicBullets: true }}
         breakpoints={{
           640: {
