@@ -80,10 +80,10 @@ const Home = () => {
         pagination={{ clickable: true, dynamicBullets: true }}
         breakpoints={{
           640: {
-            slidesPerView: 3,
+            slidesPerView: 4,
           },
           1024: {
-            slidesPerView: 4,
+            slidesPerView: 5,
           },
           1280: {
             slidesPerView: 6,
@@ -116,10 +116,10 @@ const Home = () => {
         pagination={{ clickable: true, dynamicBullets: true }}
         breakpoints={{
           640: {
-            slidesPerView: 3,
+            slidesPerView: 4,
           },
           1024: {
-            slidesPerView: 4,
+            slidesPerView: 5,
           },
           1280: {
             slidesPerView: 6,
@@ -152,10 +152,10 @@ const Home = () => {
         pagination={{ clickable: true, dynamicBullets: true }}
         breakpoints={{
           640: {
-            slidesPerView: 3,
+            slidesPerView: 4,
           },
           1024: {
-            slidesPerView: 4,
+            slidesPerView: 5,
           },
           1280: {
             slidesPerView: 6,
