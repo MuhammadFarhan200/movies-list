@@ -346,7 +346,7 @@ const Movies = () => {
   }
 
     const ShowCurrentFilter = () => {
-    return isFilter ? (
+     return isFilter ? (
       <div className='flex items-start mb-8 gap-3'>
        <Suspense fallback={<div className='bg-slate-500 w-full h-full xl:max-w-sm rounded-lg animate-pulse aspect-[16/8]'></div>}>
         <Link 

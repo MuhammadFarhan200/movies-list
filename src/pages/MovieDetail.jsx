@@ -32,7 +32,7 @@ const MovieDetail = () => {
 
     getMovieCredits(movieId).then((res) => {
       setMovieCredits(res)
-    })
+  })
   }, [movieId])
 
   const MovieCast = () => {
