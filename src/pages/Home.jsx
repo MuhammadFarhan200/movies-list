@@ -5,8 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules"
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import Loader from "../utils/Loader";
 import "swiper/css";
 import "swiper/css/pagination"
@@ -182,8 +180,6 @@ const Home = () => {
 
   return (
     <>
-      <Navbar />
-
       <div className='container mx-auto p-5 lg:p-10'>
         <h3 className='text-sky-500 text-2xl sm:text-3xl md:text-4xl text-center font-semibold my-6'>Now Playing Movies</h3>
         <p className='text-slate-200 mb-3 max-w-3xl text-center mx-auto'>Get ready for an exciting movie experience! Delve into our captivating selection of now playing films and discover a world of cinematic wonders.</p>
@@ -215,8 +211,6 @@ const Home = () => {
           <FontAwesomeIcon icon={faArrowRight} className='ms-2' />
         </Link>
       </div>
-      
-      <Footer />
     </>
   )
 }

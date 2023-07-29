@@ -1,7 +1,5 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
@@ -14,8 +12,6 @@ const About = () => {
   
   return ( 
     <>
-      <Navbar />
-
       <div className='container mx-auto p-5 sm:p-10 max-w-5xl' style={{ minHeight: 'calc(100vh - 136px)' }}>
         <h1 className='text-sky-500 text-2xl md:text-4xl text-center font-semibold my-6'>About Us</h1>
         <p className='indent-8 text-slate-200 mb-3 md:mb-5'>
@@ -49,8 +45,6 @@ const About = () => {
           Enjoy your time on our website!✨🎉
         </p>
       </div>
-
-      <Footer />
     </>
    );
 }

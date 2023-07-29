@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 import "animate.css"
 
 const Genres = () => {
@@ -75,8 +73,6 @@ const Genres = () => {
 
   return(
     <>
-      <Navbar />  
-
       <div className='container mx-auto p-5 sm:p-10' style={{ minHeight: 'calc(100vh - 136px)' }}>
         <h1 className='text-sky-500 text-2xl md:text-4xl text-center font-semibold my-6'>List of Movie Genres</h1>
         <p className='text-slate-200 text-center'>You can search for films that suit your preferences based on the genre you choose.</p>
@@ -105,8 +101,6 @@ const Genres = () => {
           </button>
         </div>
       </div>
-
-      <Footer />
     </>
   )
 }

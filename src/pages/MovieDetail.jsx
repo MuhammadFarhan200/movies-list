@@ -6,8 +6,6 @@ import { faImage, faFilm, faCalendarAlt, faStar, faUser, faUsers, faArrowLeft } 
 import { Suspense } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import { faUsersSlash } from "@fortawesome/free-solid-svg-icons";
 
 const MovieDetail = () => {
@@ -87,8 +85,6 @@ const MovieDetail = () => {
 
   return (
     <>
-      <Navbar />
-      
       <div className={`relative w-full h-[350px] lg:h-[400px]`} style={{ backgroundImage: `url(${import.meta.env.VITE_IMG_URL}/original/${movie.backdrop_path})`, backgroundSize: 'cover', backgroundPosition: 'top center' }}>
         <div className={`absolute ${movie.backdrop_path !== null ? 'bg-black' : 'bg-slate-700'} opacity-70 w-full h-full`}></div>
         <div className='flex justify-center items-center gap-10 w-fit absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
@@ -208,8 +204,6 @@ const MovieDetail = () => {
             <FontAwesomeIcon icon={faArrowLeft} className='me-1' /> Back to Before
           </button>
       </div>
-
-      <Footer />
     </>
   )
 }

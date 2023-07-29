@@ -1,14 +1,11 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { getMovieList, searchMovie, getDiscoverMovie, getGenreMovie } from "../utils/Api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faTimes, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
+import { faSearch, faTimes, faChevronLeft, faChevronRight, faEye, faFilter, faImage, faSliders } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 import Loader from "../utils/Loader";
 import Modal from "../components/Modal";
 import Swal from "sweetalert2";
-import { faEye, faFilter, faImage, faSliders } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
 
 const MovieCard = React.lazy(() => import('../components/MovieCard'));
 
@@ -500,9 +497,7 @@ const Movies = () => {
    
   return (
     <>
-      <Navbar />
-
-      <div className='container mx-auto p-5 lg:p-10' style={{ minHeight: 'calc(100vh - 136px)' }}>
+      <div className='container mx-auto p-5 lg:p-10' style={{ minHeight: 'calc(100vh - 128px)' }}>
         <h3 className='text-sky-500 text-2xl sm:text-3xl md:text-4xl text-center font-semibold my-6'>List of Movies</h3>
         <p className='text-slate-200 mb-6 max-w-3xl text-center mx-auto'>Come on, explore the complete list of film and find recommendations for your favorite films. Make your free time more enjoyable with us!</p>
         <div className='flex mb-3 w-full sm:w-fit mx-auto space-x-3'>
@@ -533,8 +528,6 @@ const Movies = () => {
         
         <Pagination />
       </div>
-
-      <Footer />
     </>
   );
 }

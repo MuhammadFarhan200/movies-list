@@ -1,8 +1,21 @@
+import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 const Navbar = () => {
   const location = useLocation()
   const path = location.pathname
+
+  useEffect(() => {
+    const navMenuList = document.querySelectorAll('.nav-link')
+    navMenuList.forEach((nav) => {
+      nav.addEventListener('click', () => {
+        const hamburger = document.getElementById('hamburger')
+        const navMenu = document.getElementById('nav-menu')
+        hamburger.classList.remove('hamburger-active')
+        navMenu.classList.add('hidden')
+      })
+    })
+  }, [])
 
   const handleClickHamburger = () => {
     const hamburger = document.getElementById('hamburger')
@@ -20,7 +33,7 @@ const Navbar = () => {
     if (!isClickInside && !isClickInsideNav) {
       hamburger.classList.remove('hamburger-active')
       navMenu.classList.add('hidden')
-    }
+    }  
   })
 
   const handleClickNav = () => {
@@ -28,7 +41,7 @@ const Navbar = () => {
   }
 
   return (
-    <header className='bg-slate-800 py-4 sticky top-0 z-10'>
+    <header className='bg-slate-800 py-4 sticky top-0 z-10 shadow-xl'>
       <div className='container mx-auto flex justify-between items-center px-5 sm:px-10'>
         <Link to='/' onClick={handleClickNav} 
           className='text-2xl font-semibold bg-gradient-to-tr from-sky-300 to-sky-500 bg-clip-text text-transparent px-1 outline-none focus:ring-2 focus:ring-cyan-500 focus:rounded-md'
