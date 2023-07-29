@@ -52,6 +52,9 @@ const Home = () => {
           1280: {
             slidesPerView: 6,
           },
+          1536: {
+            slidesPerView: 7,
+          },
         }}
         className='pb-10 sm:pb-12 px-5 sm:px-10'
       >
@@ -87,6 +90,9 @@ const Home = () => {
           },
           1280: {
             slidesPerView: 6,
+          },
+          1536: {
+            slidesPerView: 7,
           },
         }}
         className='pb-10 sm:pb-12 px-5 sm:px-10'
@@ -124,6 +130,9 @@ const Home = () => {
           1280: {
             slidesPerView: 6,
           },
+          1536: {
+            slidesPerView: 7,
+          },
         }}
         className='pb-10 sm:pb-12 px-5 sm:px-10'
       >
@@ -159,6 +168,9 @@ const Home = () => {
           },
           1280: {
             slidesPerView: 6,
+          },
+          1536: {
+            slidesPerView: 7,
           },
         }}
         className='pb-10 sm:pb-12 px-5 sm:px-10'
