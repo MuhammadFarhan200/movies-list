@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
-import { getMovieDetail } from "../utils/Api";
+import { getMovieCredits, getMovieDetail } from "../utils/Api";
 import { useParams, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilm, faCalendarAlt, faStar, faUsers, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faImage, faFilm, faCalendarAlt, faStar, faUser, faUsers, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { Suspense } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { Suspense } from "react";
+import { faUsersSlash } from "@fortawesome/free-solid-svg-icons";
 
 const MovieDetail = () => {
   const [movie, setMovie] = useState([])
+  const [movieCredits, setMovieCredits] = useState([])
   const { movieId } = useParams()
   const genreMovie = movie.genres
   const releaseDate = new Date(movie.release_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
@@ -25,7 +29,60 @@ const MovieDetail = () => {
     getMovieDetail(movieId).then((res) => {
       setMovie(res)
     })
+
+    getMovieCredits(movieId).then((res) => {
+      setMovieCredits(res)
+    })
   }, [movieId])
+
+  const MovieCast = () => {
+    return (
+      <div className='container mx-auto'>
+        <h1 className='text-sky-500 text-xl font-semibold ms-5 sm:ms-10 mb-6'>Cast & Actors</h1>
+        <Swiper
+          modules={[Pagination]}
+          spaceBetween={15}
+          slidesPerView={2}
+          pagination={{ clickable: true, dynamicBullets: true }}
+          breakpoints={{
+            640: {
+              slidesPerView: 4,
+            },
+            1024: {
+              slidesPerView: 6,
+            },
+            1280: {
+              slidesPerView: 7,
+            },
+          }}
+          className='pb-10 px-5 sm:px-10 rounded-lg'
+        >
+          {movieCredits.cast?.length > 0 ? (
+            movieCredits.cast?.map((cast) => (
+              <SwiperSlide key={cast.id}>
+                <div className='bg-slate-500 rounded-lg text-slate-200 shadow-xl aspect-[4/6]'>
+                  {cast.profile_path ? (
+                    <img src={`${import.meta.env.VITE_IMG_URL}/w500/${cast.profile_path}`} alt={cast.name} className='rounded-lg text-slate-200 shadow-xl' />
+                  ) : (
+                      <div className='w-full h-full flex justify-center items-center'>
+                        <FontAwesomeIcon icon={faUser} className='text-8xl' />
+                      </div>
+                  )}
+                </div>
+                <h1 className='text-sky-500 font-medium mt-3'>{cast.name}</h1>
+                <h1 className='text-slate-200 text-sm font-medium mt-1'>{cast.character}</h1>
+              </SwiperSlide>
+            ))
+          ) : (
+            <div className='w-full h-full flex justify-center items-center'>
+              <FontAwesomeIcon icon={faUsersSlash} className='text-6xl text-slate-400' />
+              <p className='text-slate-500 text-xl font-medium ms-5'>No Cast Found</p>
+            </div>
+          )}
+        </Swiper>
+      </div>
+    )
+  }
 
   return (
     <>
@@ -35,9 +92,15 @@ const MovieDetail = () => {
         <div className='absolute bg-black opacity-70 w-full h-full'></div>
         <div className='flex justify-center items-center gap-10 w-fit absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
           <Suspense fallback={<div className='w-full h-full bg-slate-400 animate-pulse aspect-[4/6]'></div>}>
-            <img src={`${import.meta.env.VITE_IMG_URL}/w500/${movie.poster_path}`} alt={movie.title}  
-              className='rounded-lg w-48 mt-3 lg:my-3 text-slate-200 shadow-xl'
-            />
+            {movie.poster_path ? (
+              <img src={`${import.meta.env.VITE_IMG_URL}/w500/${movie.poster_path}`} alt={movie.title} className='w-48 rounded-lg shadow-xl object-cover mt-3 lg:mt-0' />
+            ) : (
+              <div className='w-48 h-64 rounded-lg shadow-xl bg-slate-500'>
+                <div className='w-full h-full flex justify-center items-center'>
+                  <FontAwesomeIcon icon={faImage} className='text-6xl text-slate-200' />
+                </div>
+              </div>
+            )}
           </Suspense>
           <div className='hidden lg:block'>
             <h1 className='text-sky-500 text-4xl font-semibold text-center'>{movie.title}</h1>
@@ -96,7 +159,7 @@ const MovieDetail = () => {
         </div>
         <h4 className='text-sky-500 text-xl font-semibold mb-3'>Overview</h4>
         <p className='text-slate-200 lg:text-lg my-3'>{movie.overview == "" ? '-' : movie.overview}</p>
-        <div className='bg-slate-800 rounded-xl p-4 mt-7 mb-10'>
+        <div className='bg-slate-800 rounded-xl p-4 mt-7'>
           <div className='flex flex-wrap my-3 text-slate-200 lg:text-lg'>
             <span className='font-medium'>Genre:</span>&nbsp;
             {genreMovie?.length > 0 ? genreMovie?.map((genre, index) => {
@@ -135,10 +198,14 @@ const MovieDetail = () => {
           </div>
           <p className='lg:hidden text-slate-200 lg:text-lg my-3'><span className='font-medium'>Popularity:</span> {movie.popularity}</p>
         </div>
+      </div>
 
+      <MovieCast />
+
+      <div className='container mx-auto p-5 sm:p-10'>
         <button onClick={() => history.back()} className='block w-fit button py-3 my-5 ms-auto'>
-          <FontAwesomeIcon icon={faArrowLeft} className='me-1' /> Back to Before
-        </button>
+            <FontAwesomeIcon icon={faArrowLeft} className='me-1' /> Back to Before
+          </button>
       </div>
 
       <Footer />

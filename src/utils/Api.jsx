@@ -32,3 +32,8 @@ export const getDiscoverMovie = async (page, genreId, sortBy) => {
   const discover = await axios.get(`${baseUrl}/discover/movie?page=${page}&api_key=${apiKey}&release_date.lte=${year}-${month}-${day}&sort_by=${sortBy ? sortBy : 'popularity.desc'}&with_genres=${genreId}`); // API URL
   return discover.data;
 }
+
+export const getMovieCredits = async (id) => {
+  const credits = await axios.get(`${baseUrl}/movie/${id}/credits?api_key=${apiKey}`); // API URL
+  return credits.data;
+}

@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt, faStar } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from 'prop-types';
 import { Suspense } from "react";
+import { faImage } from "@fortawesome/free-solid-svg-icons";
 
 const MovieCard = ({ movie, className }) => {
   const [genreMovie, setGenreMovie] = useState([])
@@ -50,9 +51,19 @@ const MovieCard = ({ movie, className }) => {
         </div>
         <p className='text-white text-sm mt-3 hidden lg:block'>{`${movie.overview.substring(0, 100)}...`}</p>
       </div>
-      <Suspense fallback={<div className='w-full h-full bg-slate-400 animate-pulse aspect-[4/6]'></div>}>
-        <img src={`${import.meta.env.VITE_IMG_URL}/w500/${movie.poster_path}`} alt={movie.title}
-          className='rounded-lg w-full h-full text-slate-200 object-cover' />
+      <Suspense fallback={<div className='w-full h-full bg-slate-500 animate-pulse aspect-[4/6]'></div>}>
+        {movie.poster_path ? (
+          <div className='w-full h-full bg-slate-500 rounded-lg aspect-[4/6]'>
+            <img src={`${import.meta.env.VITE_IMG_URL}/w500/${movie.poster_path}`} alt={movie.title}
+              className='rounded-lg w-full h-full text-slate-200 object-cover' />
+          </div>
+        ) : (
+          <div className='w-full h-full bg-slate-500 rounded-lg aspect-[4/6]'>
+            <div className='w-full h-full flex justify-center items-center'>
+              <FontAwesomeIcon icon={faImage} className='text-slate-200 text-6xl' />
+            </div>
+          </div>
+        )}
       </Suspense>
     </Link>
   )

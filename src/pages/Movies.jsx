@@ -7,10 +7,8 @@ import Navbar from "../components/Navbar";
 import Loader from "../utils/Loader";
 import Modal from "../components/Modal";
 import Swal from "sweetalert2";
-import { faSliders } from "@fortawesome/free-solid-svg-icons";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faFilter, faImage, faSliders } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 const MovieCard = React.lazy(() => import('../components/MovieCard'));
 
@@ -349,11 +347,11 @@ const Movies = () => {
 
     const ShowCurrentFilter = () => {
     return isFilter ? (
-      <div className='flex items-start mb-7 gap-3'>
-       <Suspense fallback={<div className='w-full h-52 bg-slate-700 rounded-lg animate-pulse'></div>}>
+      <div className='flex items-start mb-8 gap-3'>
+       <Suspense fallback={<div className='bg-slate-500 w-full h-full xl:max-w-sm rounded-lg animate-pulse aspect-[16/8]'></div>}>
         <Link 
             to={`/movie/${popularMovie[0]?.id}`} 
-            className='hidden relative bg-slate-800 xl:block xl:max-w-md max-h-52 rounded-lg group overflow-hidden focus:ring-[3px] focus:ring-cyan-500'>
+            className='hidden relative bg-slate-500 w-full h-full xl:block xl:max-w-sm max-h-52 rounded-lg group overflow-hidden focus:ring-[3px] focus:ring-cyan-500 aspect-[16/8]'>
             {popularMovie[0]?.backdrop_path ? (
               <>
                 <div className='bg-gradient-to-t from-slate-800 to-transparent w-full h-40 absolute bottom-0 
@@ -363,14 +361,16 @@ const Movies = () => {
                 <img src={`${import.meta.env.VITE_IMG_URL}/w500/${popularMovie[0]?.backdrop_path}`} alt={popularMovie[0]?.title} className="object-cover w-full" />
               </>
               ) : 
-              <div className='bg-slate-800 w-full h-full flex justify-center items-center'><p className='text-slate-200 text-lg'>No Image</p></div>
+              <div className=' w-full h-full flex justify-center items-center'>
+                  <FontAwesomeIcon icon={faImage} className='text-slate-200 text-6xl' />
+              </div>
             } 
-          </Link>
+        </Link>
        </Suspense>
         <div className='w-full xl:max-w-5xl xl:ps-3 ms-auto'>
           <div className='flex justify-between items-start'>
             <p className='text-slate-200 font-medium mt-2'>The filter that is being applied to the current data:</p>
-            <button type='button' className='button'
+            <button type='button' className='button ms-5'
               onClick={() => handleRemoveFilter()}
             >
               <FontAwesomeIcon icon={faTimes} className="md:me-2" />
@@ -424,51 +424,6 @@ const Movies = () => {
         </div>
         <p className='text-slate-300 text-center mb-6 sm:mb-10 '><span className='font-medium'>Note:</span> Filter feature cannot be combined with searching</p>
         <FilterModal />
-        {/* {isFilter ? (
-          <div className='flex mb-7 gap-3'>
-            <Link 
-              to={`/movie/${popularMovie[0]?.id}`} 
-              className='hidden relative bg-slate-800 xl:block xl:max-w-sm w-full rounded-lg group overflow-hidden focus:ring-[3px] focus:ring-cyan-500'>
-              {popularMovie[0]?.backdrop_path ? (
-                <>
-                  <div className='bg-gradient-to-t from-slate-800 to-transparent w-full h-40 absolute bottom-0 
-                    opacity-0 group-hover:opacity-100 transition-all ease-in-out'
-                  ></div>
-                  <FontAwesomeIcon icon={faEye} className='absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 text-cyan-500 text-[50px] opacity-0 group-hover:opacity-100 transition-all ease-in-out' />
-                  <img src={`${import.meta.env.VITE_IMG_URL}/original/${popularMovie[0]?.backdrop_path}`} alt={popularMovie[0]?.title} className="object-cover w-full" />
-                </>
-                ) : 
-                <div className='bg-slate-800 w-full h-full flex justify-center items-center'><p className='text-slate-200 text-lg'>No Image</p></div>
-              } 
-            </Link>
-            <div className='bg-slate-800 w-full xl:max-w-4xl rounded-lg p-4 ms-auto'>
-              <div className='flex justify-between items-start'>
-                <p className='text-slate-200 font-medium mt-2'>The filter that is being applied to the current data:</p>
-                <button type='button' className='button bg-slate-700'
-                  onClick={() => handleRemoveFilter()}
-                >
-                  <FontAwesomeIcon icon={faTimes} className="md:me-2" />
-                  <span className='hidden md:inline'>Clear</span>
-                </button>
-              </div>
-              {sortBy ? (
-                <p className='text-slate-200 mt-2'>Sort by: <span className='text-cyan-500'>{sortBy === 'popularity.desc' ? 'Popular' : sortBy === 'vote_average.desc' ? 'Top Rated' : sortBy === 'primary_release_date.desc' ? 'Latest' : 'Popular'}</span></p>
-              ) : (<></>)}
-              {genreId === '[]' || genreId.length < 1 ? (
-                <></>
-              ) : (
-                <>
-                  <p className='text-slate-200 mt-2'>Filter by Genre:</p>
-                  <div className='flex flex-wrap gap-2 mt-2'>
-                    {genreMovie.map((genre, index) => (
-                      <span key={index} className='bg-slate-700 text-cyan-500 px-3 py-2 rounded-lg outline-none'>{genre.name}</span>
-                    ))}
-                  </div>
-                </>
-              )}
-            </div>
-          </div> 
-        ) : (<></>)} */}
         <ShowCurrentFilter />
         <PopularMovieList />
         {popularMovie.length < 1 ? (
