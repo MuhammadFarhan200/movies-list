@@ -9,6 +9,8 @@ import { faImage } from "@fortawesome/free-solid-svg-icons";
 
 const MovieCard = ({ movie, className }) => {
   const [genreMovie, setGenreMovie] = useState([])
+  const releaseDate = new Date(movie.release_date).toLocaleDateString('en-US', { year: 'numeric' })
+  const movieRating = movie.vote_average?.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 2 })
 
   useEffect(() => { 
     getGenreMovie().then((res) => {
@@ -16,8 +18,6 @@ const MovieCard = ({ movie, className }) => {
     })
   }, [])
 
-  const releaseDate = new Date(movie.release_date).toLocaleDateString('en-US', { year: 'numeric' })
-  
   return (
     <Link to={`/movie/${movie.id}`}
       className={`${className} group relative rounded-lg outline-none focus:ring-[3px] focus:ring-cyan-500 cursor-pointer overflow-hidden`}
@@ -32,7 +32,7 @@ const MovieCard = ({ movie, className }) => {
             </p>
           <p className='text-white text-sm font-semibold'>
             <FontAwesomeIcon icon={faStar} className='me-1' />
-            {movie.vote_average}
+            {movieRating}
             </p>
         </div>
         <div className='flex flex-wrap justify-center mt-3'>
@@ -60,7 +60,7 @@ const MovieCard = ({ movie, className }) => {
         ) : (
           <div className='w-full h-full bg-slate-500 rounded-lg aspect-[4/6]'>
             <div className='w-full h-full flex justify-center items-center'>
-              <FontAwesomeIcon icon={faImage} className='text-slate-200 text-6xl' />
+              <FontAwesomeIcon icon={faImage} className='text-slate-300 text-6xl' />
             </div>
           </div>
         )}

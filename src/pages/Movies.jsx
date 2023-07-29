@@ -345,8 +345,8 @@ const Movies = () => {
     )
   }
 
-    const ShowCurrentFilter = () => {
-     return isFilter ? (
+  const ShowCurrentFilter = () => {
+    return isFilter ? (
       <div className='flex items-start mb-8 gap-3'>
        <Suspense fallback={<div className='bg-slate-500 w-full h-full xl:max-w-sm rounded-lg animate-pulse aspect-[16/8]'></div>}>
         <Link 
@@ -362,7 +362,7 @@ const Movies = () => {
               </>
               ) : 
               <div className=' w-full h-full flex justify-center items-center'>
-                  <FontAwesomeIcon icon={faImage} className='text-slate-200 text-6xl' />
+                  <FontAwesomeIcon icon={faImage} className='text-slate-300 text-6xl' />
               </div>
             } 
         </Link>
@@ -396,7 +396,108 @@ const Movies = () => {
       </div> 
     ) : (<></>)
   }
-  
+
+  const Pagination = () => {
+    return popularMovie.length < 1 ? (
+      <></>
+    ) : (
+      <>
+        <div className={`${isSearch ? 'hidden' : 'flex'} flex-wrap justify-center items-center gap-2 mb-5 sm:mb-3`}>
+          <button type='button' name='prev' className={`${currentPage === 1 ? 'hidden' : 'inline-block'} button`}
+            onClick={() => handleChangePage(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            <FontAwesomeIcon icon={faChevronLeft} className='me-2' />
+            <span>Prev</span>
+          </button>
+          <button type='button' name='first' className={`${currentPage > 10 ? 'inline-block' : 'hidden'} button`}
+            onClick={() => handleChangePage(1)}
+          >
+            1
+          </button>
+          {
+            Array.from({ length: totalPages }, (_, index) => index + 1)
+            .slice(startIndex, endIndex)
+            .map((page) => (
+            <button
+              key={page}
+              className={`px-4 py-2 rounded-lg ${
+                currentPage === page ? "bg-cyan-500 text-white outline-none" : "bg-slate-800 text-slate-200 hover:text-cyan-500 focus:ring-2 focus:ring-cyan-500 outline-none"
+              }`}
+              onClick={() => handleChangePage(page)}
+            >
+              {page}
+            </button>
+          ))}
+          <button type='button' name='next' className={`${(currentPage || startIndex) < totalPages - 10 && endIndex < totalPages? 'inline-block' : 'hidden'} button`}
+            onClick={handleLoadMorePage}
+            disabled={currentPage === totalPages}
+          >
+            ...
+          </button>
+          <button type='button' name='last' className={`${(currentPage || startIndex) < totalPages && endIndex < totalPages? 'inline-block' : 'hidden'} button`}
+            onClick={() => handleChangePage(totalPages)}
+          >
+            {totalPages}
+          </button>
+          <button type='button' name='next' className={`${currentPage == totalPages ? 'hidden' : 'inline-block'} button`}
+            onClick={() => handleChangePage(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            <span>Next</span>
+            <FontAwesomeIcon icon={faChevronRight} className='ms-2' />
+          </button>
+        </div>
+        <div className={`${isSearch ? 'flex' : 'hidden'} flex-wrap justify-center items-center gap-2 mb-5 sm:mb-3`}>
+          <button type='button' name='prev' className={`${currentPageSearch === 1 ? 'hidden' : 'inline-block'} button`}
+            onClick={() => handleChangePage(currentPageSearch - 1)}
+            disabled={currentPageSearch === 1}
+          >
+            <FontAwesomeIcon icon={faChevronLeft} className='me-2' />
+            <span>Prev</span>
+          </button>
+          <button type='button' name='first' className={`${currentPageSearch > 10 ? 'inline-block' : 'hidden'} button`}
+            onClick={() => handleChangePage(1)}
+          >
+            1
+          </button>
+          {
+            Array.from({ length: totalPages }, (_, index) => index + 1)
+            .slice(startIndex, endIndex)
+            .map((page) => (
+            <button
+              key={page}
+              className={`px-4 py-2 rounded-lg ${
+                currentPageSearch === page ? "bg-cyan-500 text-white outline-none" : "bg-slate-800 text-slate-200 hover:text-cyan-500 focus:ring-2 focus:ring-cyan-500 outline-none"
+              }`}
+              onClick={() => handleChangePage(page)}
+            >
+              {page}
+            </button>
+          ))}
+          <button type='button' name='next' className={`${(currentPageSearch || startIndex) < totalPages - 10 && endIndex < totalPages? 'inline-block' : 'hidden'} button`}
+            onClick={handleLoadMorePage}
+            disabled={currentPageSearch === totalPages}
+          >
+            ...
+          </button>
+          <button type='button' name='last' className={`${(currentPageSearch || startIndex) < totalPages && endIndex < totalPages? 'inline-block' : 'hidden'} button`}
+            onClick={() => handleChangePage(totalPages)}
+          >
+            {totalPages}
+          </button>
+          <button type='button' name='next' className={`${currentPageSearch == totalPages ? 'hidden' : 'inline-block'} button`}
+            onClick={() => handleChangePage(currentPageSearch + 1)}
+            disabled={currentPageSearch === totalPages}
+          >
+            <span>Next</span>
+            <FontAwesomeIcon icon={faChevronRight} className='ms-2' />
+          </button>
+        </div>
+      </>
+    )
+  }
+   
   return (
     <>
       <Navbar />
@@ -423,105 +524,14 @@ const Movies = () => {
           </button>
         </div>
         <p className='text-slate-300 text-center mb-6 sm:mb-10 '><span className='font-medium'>Note:</span> Filter feature cannot be combined with searching</p>
+        
         <FilterModal />
+
         <ShowCurrentFilter />
+
         <PopularMovieList />
-        {popularMovie.length < 1 ? (
-          <></>
-        ) : (
-          <>
-            <div className={`${isSearch ? 'hidden' : 'flex'} flex-wrap justify-center items-center gap-2 mb-5 sm:mb-3`}>
-              <button type='button' name='prev' className={`${currentPage === 1 ? 'hidden' : 'inline-block'} button`}
-                onClick={() => handleChangePage(currentPage - 1)}
-                disabled={currentPage === 1}
-              >
-                <FontAwesomeIcon icon={faChevronLeft} className='me-2' />
-                <span>Prev</span>
-              </button>
-              <button type='button' name='first' className={`${currentPage > 10 ? 'inline-block' : 'hidden'} button`}
-                onClick={() => handleChangePage(1)}
-              >
-                1
-              </button>
-              {
-                Array.from({ length: totalPages }, (_, index) => index + 1)
-                .slice(startIndex, endIndex)
-                .map((page) => (
-                <button
-                  key={page}
-                  className={`px-4 py-2 rounded-lg ${
-                    currentPage === page ? "bg-cyan-500 text-white" : "bg-slate-800 text-slate-200 hover:text-cyan-500 focus:ring-2 focus:ring-cyan-500 outline-none"
-                  }`}
-                  onClick={() => handleChangePage(page)}
-                >
-                  {page}
-                </button>
-              ))}
-              <button type='button' name='next' className={`${(currentPage || startIndex) < totalPages - 10 && endIndex < totalPages? 'inline-block' : 'hidden'} button`}
-                onClick={handleLoadMorePage}
-                disabled={currentPage === totalPages}
-              >
-                ...
-              </button>
-              <button type='button' name='last' className={`${(currentPage || startIndex) < totalPages && endIndex < totalPages? 'inline-block' : 'hidden'} button`}
-                onClick={() => handleChangePage(totalPages)}
-              >
-                {totalPages}
-              </button>
-              <button type='button' name='next' className={`${currentPage == totalPages ? 'hidden' : 'inline-block'} button`}
-                onClick={() => handleChangePage(currentPage + 1)}
-                disabled={currentPage === totalPages}
-              >
-                <span>Next</span>
-                <FontAwesomeIcon icon={faChevronRight} className='ms-2' />
-              </button>
-            </div>
-            <div className={`${isSearch ? 'flex' : 'hidden'} flex-wrap justify-center items-center gap-2 mb-5 sm:mb-3`}>
-              <button type='button' name='prev' className={`${currentPageSearch === 1 ? 'hidden' : 'inline-block'} button`}
-                onClick={() => handleChangePage(currentPageSearch - 1)}
-                disabled={currentPageSearch === 1}
-              >
-                Prev
-              </button>
-              <button type='button' name='first' className={`${currentPageSearch > 10 ? 'inline-block' : 'hidden'} button`}
-                onClick={() => handleChangePage(1)}
-              >
-                1
-              </button>
-              {
-                Array.from({ length: totalPages }, (_, index) => index + 1)
-                .slice(startIndex, endIndex)
-                .map((page) => (
-                <button
-                  key={page}
-                  className={`px-4 py-2 rounded-lg ${
-                    currentPageSearch === page ? "bg-cyan-500 text-white" : "bg-slate-800 text-slate-200 hover:text-cyan-500 focus:ring-2 focus:ring-cyan-500"
-                  }`}
-                  onClick={() => handleChangePage(page)}
-                >
-                  {page}
-                </button>
-              ))}
-              <button type='button' name='next' className={`${(currentPageSearch || startIndex) < totalPages - 10 && endIndex < totalPages? 'inline-block' : 'hidden'} button`}
-                onClick={handleLoadMorePage}
-                disabled={currentPageSearch === totalPages}
-              >
-                ...
-              </button>
-              <button type='button' name='last' className={`${(currentPageSearch || startIndex) < totalPages && endIndex < totalPages? 'inline-block' : 'hidden'} button`}
-                onClick={() => handleChangePage(totalPages)}
-              >
-                {totalPages}
-              </button>
-              <button type='button' name='next' className={`${currentPageSearch == totalPages ? 'hidden' : 'inline-block'} button`}
-                onClick={() => handleChangePage(currentPageSearch + 1)}
-                disabled={currentPageSearch === totalPages}
-              >
-                Next
-              </button>
-            </div>
-          </>
-        )}
+        
+        <Pagination />
       </div>
 
       <Footer />

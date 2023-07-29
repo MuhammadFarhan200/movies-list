@@ -69,14 +69,14 @@ const MovieDetail = () => {
                       </div>
                   )}
                 </div>
-                <h1 className='text-sky-500 font-medium mt-3'>{cast.name}</h1>
-                <h1 className='text-slate-200 text-sm font-medium mt-1'>{cast.character}</h1>
+                <h6 className='text-sky-500 font-medium mt-3'>{cast.name}</h6>
+                <p className='text-slate-200 text-sm font-medium mt-1'>{cast.character}</p>
               </SwiperSlide>
             ))
           ) : (
-            <div className='w-full h-full flex justify-center items-center'>
-              <FontAwesomeIcon icon={faUsersSlash} className='text-6xl text-slate-400' />
-              <p className='text-slate-500 text-xl font-medium ms-5'>No Cast Found</p>
+            <div className='w-full h-full flex justify-center items-center mt-3'>
+              <FontAwesomeIcon icon={faUsersSlash} className='text-slate-400 text-4xl' />
+              <p className='text-slate-400 text-xl font-medium ms-5'>No Cast Found</p>
             </div>
           )}
         </Swiper>
@@ -89,15 +89,15 @@ const MovieDetail = () => {
       <Navbar />
       
       <div className={`relative w-full h-[350px] lg:h-[400px]`} style={{ backgroundImage: `url(${import.meta.env.VITE_IMG_URL}/original/${movie.backdrop_path})`, backgroundSize: 'cover', backgroundPosition: 'top center' }}>
-        <div className='absolute bg-black opacity-70 w-full h-full'></div>
+        <div className={`absolute ${movie.backdrop_path !== null ? 'bg-black' : 'bg-slate-700'} opacity-70 w-full h-full`}></div>
         <div className='flex justify-center items-center gap-10 w-fit absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
           <Suspense fallback={<div className='w-full h-full bg-slate-400 animate-pulse aspect-[4/6]'></div>}>
             {movie.poster_path ? (
               <img src={`${import.meta.env.VITE_IMG_URL}/w500/${movie.poster_path}`} alt={movie.title} className='w-48 rounded-lg shadow-xl object-cover mt-3 lg:mt-0' />
             ) : (
-              <div className='w-48 h-64 rounded-lg shadow-xl bg-slate-500'>
+              <div className='w-[11.5rem] h-64 sm:w-48 sm:h-[17rem] rounded-lg shadow-xl bg-slate-500'>
                 <div className='w-full h-full flex justify-center items-center'>
-                  <FontAwesomeIcon icon={faImage} className='text-6xl text-slate-200' />
+                  <FontAwesomeIcon icon={faImage} className='text-6xl text-slate-300' />
                 </div>
               </div>
             )}
