@@ -41,7 +41,7 @@ const Navbar = () => {
   }
 
   return (
-    <header className='bg-slate-800 py-4 sticky top-0 z-10 shadow-lg'>
+    <header className='bg-slate-800 py-4 sticky top-0 z-10 shadow'>
       <div className='container mx-auto flex justify-between items-center px-5 sm:px-10'>
         <Link to='/' onClick={handleClickNav} 
           className='text-2xl font-semibold bg-gradient-to-tr from-sky-300 to-sky-500 bg-clip-text text-transparent px-1 outline-none focus:ring-2 focus:ring-cyan-500 focus:rounded-md'

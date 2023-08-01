@@ -20,19 +20,32 @@ const Home = () => {
   useEffect(() => {
     document.title = 'MList | Find Your Favorite Movie'
     window.scrollTo(0, 0)
-    getMovieList(1, 'now_playing').then((res) => {
-      setNowPlayingMovie(res.results)
-    })
-    getMovieList(1, 'popular').then((res) => {
-      setPopularMovie(res.results)
-    })
-    getMovieList(1, 'top_rated').then((res) => {
-      setTopRatedMovie(res.results)
-    })
-    getMovieList(1, 'upcoming').then((res) => {
-      setUpcomingMovie(res.results)
-    })
-  }, [])
+    
+    const fetchMovie = async () => {
+      try {
+        const [
+          topRatedMovie,
+          nowPlayingMovie,
+          popularMovie,
+          upcomingMovie
+        ] = await Promise.all([
+          getMovieList(1, 'top_rated'),
+          getMovieList(1, 'now_playing'),
+          getMovieList(1, 'popular'),
+          getMovieList(1, 'upcoming')
+        ])
+
+        setTopRatedMovie(topRatedMovie.results)
+        setNowPlayingMovie(nowPlayingMovie.results)
+        setPopularMovie(popularMovie.results)
+        setUpcomingMovie(upcomingMovie.results)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    fetchMovie()
+  }, [])  
 
   const NowPlayingMovieList = () => {
     return nowPlayingMovie.length > 0 ? (
@@ -61,6 +74,7 @@ const Home = () => {
         {nowPlayingMovie.map((movie, index) => (
           <SwiperSlide key={index}>
             <Suspense fallback={<Loader />}>
+              {/* <p className='text-slate-200 text-sm mb-2'>{movie.original_title}</p> */}
               <MovieCard movie={movie} className='focus:ring-0' />
             </Suspense>
           </SwiperSlide>
