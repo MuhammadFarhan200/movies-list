@@ -39,8 +39,8 @@ dependencies:
     specifier: ^6.14.2
     version: 6.14.2(react-dom@18.2.0)(react@18.2.0)
   sweetalert2:
-    specifier: ^11.5.21
-    version: 11.6.0
+    specifier: ^11.7.18
+    version: 11.7.18
   swiper:
     specifier: ^10.0.4
     version: 10.0.4
@@ -2394,8 +2394,8 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /sweetalert2@11.6.0:
-    resolution: {integrity: sha512-OX0KKF5n1pNV8KH2T74WBM7735Rn+6YU0jEvEto4B0C7nu9keV7YgBxQ+nClUibyFKYr1Y2HkLtmBaXm/s8esg==}
+  /sweetalert2@11.7.18:
+    resolution: {integrity: sha512-Njl5JTDasSP8yRX9cpLdy2fdxHZYPYNmiIGNZykF2Zt1UHIvurwt/W2LmlGe5RbyMDHYDXuHqlD1Q8Vr5/mqlA==}
     dev: false
 
   /swiper@10.0.4:
