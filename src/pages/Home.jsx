@@ -11,198 +11,199 @@ import "swiper/css/pagination"
 
 const MovieCard = React.lazy(() => import('../components/MovieCard'))
 
-const Home = () => {
-  const [topRatedMovie, setTopRatedMovie] = useState([])
+const NowPlayingMovieList = () => {
   const [nowPlayingMovie, setNowPlayingMovie] = useState([])
+  
+  useEffect(() => {
+    getMovieList(1, 'now_playing').then((res) => {
+      setNowPlayingMovie(res.results)
+    })
+  }, [])
+
+  return nowPlayingMovie.length > 0 ? (
+    <Swiper
+      modules={[Pagination]}
+      spaceBetween={15}
+      slidesPerView={2}
+      grabCursor={true}
+      pagination={{ clickable: true, dynamicBullets: true }}
+      breakpoints={{
+        640: {
+          slidesPerView: 4,
+        },
+        1024: {
+          slidesPerView: 5,
+        },
+        1280: {
+          slidesPerView: 6,
+        },
+        1536: {
+          slidesPerView: 7,
+        },
+      }}
+      className='pb-10 sm:pb-12 px-5 sm:px-10'
+    >
+      {nowPlayingMovie.map((movie, index) => (
+        <SwiperSlide key={index}>
+          <Suspense fallback={<Loader />}>
+            <MovieCard movie={movie} className='focus:ring-0' />
+          </Suspense>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  ) : (
+    <div className='flex justify-center items-center'>
+      <h4 className='text-slate-200'>No Matching Results Found :(</h4>
+    </div>
+  )
+}
+
+const PopularMovieList = () => {
   const [popularMovie, setPopularMovie] = useState([])
+
+  useEffect(() => {
+    getMovieList(1, 'popular').then((res) => {
+      setPopularMovie(res.results)
+    })
+  }, [])
+
+  return popularMovie.length > 0 ? (
+    <Swiper
+      modules={[Pagination]}
+      spaceBetween={15}
+      slidesPerView={2}
+      grabCursor={true}
+      pagination={{ clickable: true, dynamicBullets: true }}
+      breakpoints={{
+        640: {
+          slidesPerView: 4,
+        },
+        1024: {
+          slidesPerView: 5,
+        },
+        1280: {
+          slidesPerView: 6,
+        },
+        1536: {
+          slidesPerView: 7,
+        },
+      }}
+      className='pb-10 sm:pb-12 px-5 sm:px-10'
+    >
+      {popularMovie.map((movie, index) => (
+        <SwiperSlide key={index}>
+          <Suspense fallback={<Loader />}>
+            <MovieCard movie={movie} className='focus:ring-0' />
+          </Suspense>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  ) : (
+    <div className='flex justify-center items-center'>
+      <h4 className='text-slate-200'>No Matching Results Found :(</h4>
+    </div>
+  )
+}
+
+const TopRatedMovieList = () => {
+  const [topRatedMovie, setTopRatedMovie] = useState([])
+
+  useEffect(() => {
+    getMovieList(1, 'top_rated').then((res) => {
+      setTopRatedMovie(res.results)
+    })
+  }, [])
+
+  return topRatedMovie.length > 0 ? (
+    <Swiper
+      modules={[Pagination]}
+      spaceBetween={15}
+      slidesPerView={2}
+      grabCursor={true}
+      pagination={{ clickable: true, dynamicBullets: true }}
+      breakpoints={{
+        640: {
+          slidesPerView: 4,
+        },
+        1024: {
+          slidesPerView: 5,
+        },
+        1280: {
+          slidesPerView: 6,
+        },
+        1536: {
+          slidesPerView: 7,
+        },
+      }}
+      className='pb-10 sm:pb-12 px-5 sm:px-10'
+    >
+      {topRatedMovie.map((movie, index) => (
+        <SwiperSlide key={index}>
+          <Suspense fallback={<Loader />}>
+            <MovieCard movie={movie} className='focus:ring-0' />
+          </Suspense>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  ) : (
+    <div className='flex justify-center items-center'>
+      <h4 className='text-slate-200'>No Matching Results Found :(</h4>
+    </div>
+  )
+}
+
+const UpcomingMovieList = () => {
   const [upcomingMovie, setUpcomingMovie] = useState([])
 
   useEffect(() => {
+    getMovieList(1, 'upcoming').then((res) => {
+      setUpcomingMovie(res.results)
+    })
+  }, [])
+  
+  return upcomingMovie.length > 0 ? (
+    <Swiper
+      modules={[Pagination]}
+      spaceBetween={15}
+      slidesPerView={2}
+      grabCursor={true}
+      pagination={{ clickable: true, dynamicBullets: true }}
+      breakpoints={{
+        640: {
+          slidesPerView: 4,
+        },
+        1024: {
+          slidesPerView: 5,
+        },
+        1280: {
+          slidesPerView: 6,
+        },
+        1536: {
+          slidesPerView: 7,
+        },
+      }}
+      className='pb-10 sm:pb-12 px-5 sm:px-10'
+    >
+      {upcomingMovie.map((movie, index) => (
+        <SwiperSlide key={index}>
+          <Suspense fallback={<Loader />}>
+            <MovieCard movie={movie} className='focus:ring-0' />
+          </Suspense>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  ) : (
+    <div className='flex justify-center items-center'>
+      <h4 className='text-slate-200'>No Matching Results Found :(</h4>
+    </div>
+  )
+}
+
+const Home = () => {
+  useEffect(() => {
     document.title = 'MList | Find Your Favorite Movie'
     window.scrollTo(0, 0)
-    
-    const fetchMovie = async () => {
-      try {
-        const [
-          topRatedMovie,
-          nowPlayingMovie,
-          popularMovie,
-          upcomingMovie
-        ] = await Promise.all([
-          getMovieList(1, 'top_rated'),
-          getMovieList(1, 'now_playing'),
-          getMovieList(1, 'popular'),
-          getMovieList(1, 'upcoming')
-        ])
-
-        setTopRatedMovie(topRatedMovie.results)
-        setNowPlayingMovie(nowPlayingMovie.results)
-        setPopularMovie(popularMovie.results)
-        setUpcomingMovie(upcomingMovie.results)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
-    fetchMovie()
   }, [])  
-
-  const NowPlayingMovieList = () => {
-    return nowPlayingMovie.length > 0 ? (
-      <Swiper
-        modules={[Pagination]}
-        spaceBetween={15}
-        slidesPerView={2}
-        grabCursor={true}
-        pagination={{ clickable: true, dynamicBullets: true }}
-        breakpoints={{
-          640: {
-            slidesPerView: 4,
-          },
-          1024: {
-            slidesPerView: 5,
-          },
-          1280: {
-            slidesPerView: 6,
-          },
-          1536: {
-            slidesPerView: 7,
-          },
-        }}
-        className='pb-10 sm:pb-12 px-5 sm:px-10'
-      >
-        {nowPlayingMovie.map((movie, index) => (
-          <SwiperSlide key={index}>
-            <Suspense fallback={<Loader />}>
-              {/* <p className='text-slate-200 text-sm mb-2'>{movie.original_title}</p> */}
-              <MovieCard movie={movie} className='focus:ring-0' />
-            </Suspense>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    ) : (
-      <div className='flex justify-center items-center'>
-        <h4 className='text-slate-200'>No Matching Results Found :(</h4>
-      </div>
-    )
-  }
-
-  const PopularMovieList = () => {
-    return popularMovie.length > 0 ? (
-      <Swiper
-        modules={[Pagination]}
-        spaceBetween={15}
-        slidesPerView={2}
-        grabCursor={true}
-        pagination={{ clickable: true, dynamicBullets: true }}
-        breakpoints={{
-          640: {
-            slidesPerView: 4,
-          },
-          1024: {
-            slidesPerView: 5,
-          },
-          1280: {
-            slidesPerView: 6,
-          },
-          1536: {
-            slidesPerView: 7,
-          },
-        }}
-        className='pb-10 sm:pb-12 px-5 sm:px-10'
-      >
-        {popularMovie.map((movie, index) => (
-          <SwiperSlide key={index}>
-            <Suspense fallback={<Loader />}>
-              <MovieCard movie={movie} className='focus:ring-0' />
-            </Suspense>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    ) : (
-      <div className='flex justify-center items-center'>
-        <h4 className='text-slate-200'>No Matching Results Found :(</h4>
-      </div>
-    )
-  }
-
-  const TopRatedMovieList = () => {
-    return topRatedMovie.length > 0 ? (
-      <Swiper
-        modules={[Pagination]}
-        spaceBetween={15}
-        slidesPerView={2}
-        grabCursor={true}
-        pagination={{ clickable: true, dynamicBullets: true }}
-        breakpoints={{
-          640: {
-            slidesPerView: 4,
-          },
-          1024: {
-            slidesPerView: 5,
-          },
-          1280: {
-            slidesPerView: 6,
-          },
-          1536: {
-            slidesPerView: 7,
-          },
-        }}
-        className='pb-10 sm:pb-12 px-5 sm:px-10'
-      >
-        {topRatedMovie.map((movie, index) => (
-          <SwiperSlide key={index}>
-            <Suspense fallback={<Loader />}>
-              <MovieCard movie={movie} className='focus:ring-0' />
-            </Suspense>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    ) : (
-      <div className='flex justify-center items-center'>
-        <h4 className='text-slate-200'>No Matching Results Found :(</h4>
-      </div>
-    )
-  }
-
-  const UpcomingMovieList = () => {
-    return upcomingMovie.length > 0 ? (
-      <Swiper
-        modules={[Pagination]}
-        spaceBetween={15}
-        slidesPerView={2}
-        grabCursor={true}
-        pagination={{ clickable: true, dynamicBullets: true }}
-        breakpoints={{
-          640: {
-            slidesPerView: 4,
-          },
-          1024: {
-            slidesPerView: 5,
-          },
-          1280: {
-            slidesPerView: 6,
-          },
-          1536: {
-            slidesPerView: 7,
-          },
-        }}
-        className='pb-10 sm:pb-12 px-5 sm:px-10'
-      >
-        {upcomingMovie.map((movie, index) => (
-          <SwiperSlide key={index}>
-            <Suspense fallback={<Loader />}>
-              <MovieCard movie={movie} className='focus:ring-0' />
-            </Suspense>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    ) : (
-      <div className='flex justify-center items-center'>
-        <h4 className='text-slate-200'>No Matching Results Found :(</h4>
-      </div>
-    )
-  }
 
   return (
     <>

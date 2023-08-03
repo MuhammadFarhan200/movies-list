@@ -202,7 +202,7 @@ const Movies = () => {
 
   const PopularMovieList = () => {
     return popularMovie.length > 0 ? (
-      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-10 sm:mb-12'>
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 mb-10 sm:mb-12'>
         {popularMovie.map((movie, index) => (
           <Suspense key={index} fallback={<Loader />}>
             <MovieCard movie={movie} />

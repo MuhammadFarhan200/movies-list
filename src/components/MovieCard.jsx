@@ -47,7 +47,7 @@ const MovieCard = ({ movie, className }) => {
             return null;
           })}
         </div>
-        <p className='text-white text-sm mt-3 hidden lg:block'>{`${movie.overview.substring(0, 100)}...`}</p>
+        <p className='text-white text-sm mt-3 hidden xl:block'>{`${movie.overview.substring(0, 100)}...`}</p>
       </div>
       <Suspense fallback={<div className='w-full h-full bg-slate-500 animate-pulse aspect-[4/6]'></div>}>
         <div className='w-full h-full bg-slate-500 rounded-lg aspect-[4/6]'>
