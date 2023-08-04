@@ -77,12 +77,12 @@ const Genres = () => {
         <h1 className='text-sky-500 text-2xl md:text-4xl text-center font-semibold my-6'>List of Movie Genres</h1>
         <p className='text-slate-200 text-center'>You can search for films that suit your preferences based on the genre you choose.</p>
         <p className='text-slate-200 text-center mb-10'>Click on the genre you want to see!</p>
-        <div className='grid grid-cols-2 row-auto sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4 mb-10'>
+        <div className='grid grid-cols-2 row-auto sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:flex xl:flex-wrap gap-4 xl:gap-3 mb-10'>
           {genres.map((genre, index) => (
             <button
               key={index}
               id={`genre-${genre.id}`}
-              className={`flex w-full h-full justify-center items-center group py-4 px-4 ${selectedGenres.includes(genre.id) ? 'button-primary focus:border-0 focus:ring-2 text-slate-800 hover:text-slate-800' : 'button'}`}
+              className={`flex w-full xl:w-auto h-full justify-center items-center group py-4 px-4 xl:px-8 ${selectedGenres.includes(genre.id) ? 'button-primary focus:border-0 focus:ring-2 text-slate-800 hover:text-slate-800' : 'button'}`}
               onClick={() => handleClickGenre(genre.id)}
             >
               <p className={`font-medium ${selectedGenres.includes(genre.id) ? 'text-slate-800' : 'text-slate-200 group-hover:text-sky-500'}`}>
