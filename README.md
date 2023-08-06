@@ -32,7 +32,7 @@ $ pnpm install
 
 Before running it you have to configure the environment requirements first. Please follow the instructions below:
 
-- Create an .env file based on the .env.example file:
+- Create an `.env` file based on the `.env.example` file:
 
 ```bash
 $ copy .env.example .env
