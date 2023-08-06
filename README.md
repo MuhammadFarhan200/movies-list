@@ -50,8 +50,6 @@ $ cp .env.example .env
 VITE_APIKEY=YOUR_API_KEY // Please change the value with api key from your themoviedb account
 ```
 
-After the above steps are completed, then your application is ready
-
 - Finally, to start development you can run the command:
 
 ```bash
