@@ -44,7 +44,7 @@ Or you can also run the command:
 $ cp .env.example .env
 ```
 
-- Then open the .env file that was created and look at the `VITE_APIKEY` section
+- Then open the `.env` file that was created and look at the `VITE_APIKEY` section
 
 ```bash
 VITE_APIKEY=YOUR_API_KEY // Please change the value with api key from your themoviedb account
