@@ -5,7 +5,7 @@ The main feature of this application is getting movie data from themoviedb API u
 
 ## Precondition
 
-Before running this project, make sure you have installed:
+Before starting development, make sure you have installed:
 
 - <a href="https://nodejs.org" target="_blank">Node.js</a>
 - <a href="https://www.npmjs.com" target="_blank">pnpm</a>
