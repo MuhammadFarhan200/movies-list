@@ -17,7 +17,7 @@ const About = () => {
         <p className='indent-8 text-slate-200 mb-3 md:mb-5'>
           Welcome to the &quot;About&quot; page of our <span className='font-medium'>Film Information System</span>! 
           We are a website that provides up-to-date information about various films from around the world. 
-          The film data that we display comes from <Link to='https://www.themoviedb.org/' target="_blank" className='font-medium text-sky-500 hover:underline outline-none'>The Movie Database (TMDb)</Link>, a trusted source for information on the latest, popular films and much more.
+          The film data that we display comes from <Link to='https://www.themoviedb.org/' target="_blank" className='font-medium text-sky-500 hover:underline focus:ring-2 focus:ring-cyan-500 rounded-md outline-none'>The Movie Database (TMDb)</Link>, a trusted source for information on the latest, popular films and much more.
         </p>
         <p className='indent-8 text-slate-200 mb-3 md:mb-5'>
           Do you like thrilling action movies, thrilling adventure movies or deep drama movies? Or maybe you prefer entertaining animated films, thrilling comedies or thrilling horror films? No problem, we have a wide selection of movies for all tastes.
