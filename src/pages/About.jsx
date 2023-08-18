@@ -30,13 +30,13 @@ const About = () => {
          If you have any questions or feedback, don&apos;t hesitate to contact us.
         </p>
         <p className='text-slate-200'>
-          <Link to='mailto:farhannsrllh177@gmail.com' className='hover:text-sky-500 hover:underline outline-none'>
+          <Link to='mailto:farhannsrllh177@gmail.com' className='hover:text-sky-500 hover:underline focus:text-sky-500 focus:ring-2 focus:ring-cyan-500 rounded-md outline-none'>
             <FontAwesomeIcon icon={faEnvelope} className='text-xl mr-2' />
             farhannsrllh177@gmail.com
           </Link>
         </p>
         <p className='text-slate-200 mb-3 md:mb-5'>
-          <Link to='https://github.com/MuhammadFarhan200' target="_blank" className='hover:text-sky-500 hover:underline outline-none'>
+          <Link to='https://github.com/MuhammadFarhan200' target="_blank" className='hover:text-sky-500 hover:underline focus:text-sky-500 focus:ring-2 focus:ring-cyan-500 rounded-md outline-none'>
           <FontAwesomeIcon icon={faGithub} className='text-xl mr-2' />
             MuhammadFarhan200
           </Link>
