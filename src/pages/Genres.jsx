@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { getGenreMovie } from "../utils/Api";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import "animate.css"
+import TopSection from "../components/Genres/TopSectionGenres";
+import GenreList from "../components/Genres/GenreList";
+import FilterButton from "../components/Genres/FilterButton";
 
 const Genres = () => {
   const [genres, setGenres] = useState([])
@@ -74,32 +75,9 @@ const Genres = () => {
   return(
     <>
       <div className='container mx-auto p-5 sm:p-10' style={{ minHeight: 'calc(100vh - 136px)' }}>
-        <h1 className='text-sky-500 text-2xl md:text-4xl text-center font-semibold my-6'>List of Movie Genres</h1>
-        <p className='text-slate-200 text-center'>You can search for films that suit your preferences based on the genre you choose.</p>
-        <p className='text-slate-200 text-center mb-10'>Click on the genre you want to see!</p>
-        <div className='grid grid-cols-2 row-auto sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:flex xl:flex-wrap gap-4 xl:gap-3 mb-10'>
-          {genres.map((genre, index) => (
-            <button
-              key={index}
-              id={`genre-${genre.id}`}
-              className={`flex w-full xl:w-auto h-full justify-center items-center group py-4 px-4 xl:px-8 ${selectedGenres.includes(genre.id) ? 'button-primary focus:border-0 focus:ring-2 text-slate-800 hover:text-slate-800' : 'button'}`}
-              onClick={() => handleClickGenre(genre.id)}
-            >
-              <p className={`font-medium ${selectedGenres.includes(genre.id) ? 'text-slate-800' : 'text-slate-200 group-hover:text-sky-500'}`}>
-                {genre.name}
-              </p>
-            </button>
-          ))}
-        </div>
-        <div className='text-end mb-10'>
-          <button
-            className='button-primary py-3'
-            onClick={handleClickFilter}
-          >
-            <span className='font-semibold'>Apply Filter</span>
-            <FontAwesomeIcon icon={faFilter} className='text-sm ms-2' />
-          </button>
-        </div>
+        <TopSection />
+        <GenreList genres={genres} onHandleClickGenre={handleClickGenre} selectedGenres={selectedGenres} />
+        <FilterButton onHandleClickFilter={handleClickFilter} />
       </div>
     </>
   )

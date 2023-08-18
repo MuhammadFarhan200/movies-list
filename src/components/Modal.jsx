@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PropTypes } from "prop-types";
 
 const Modal = ({ isOpen, onClose, title, children }) => {
-  if (!isOpen) return null;
+  if (!isOpen) return;
   return (
     <div className="bg-black bg-opacity-60 fixed top-0 left-0 w-full h-full flex justify-center items-center z-[999]">
       <div className="bg-slate-800 max-w-4xl max-h-full rounded-lg m-3 md:m-5">
