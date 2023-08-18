@@ -6,7 +6,7 @@ import Loader from "../../utils/Loader"
 import "swiper/css";
 import "swiper/css/pagination"
 
-const MovieCard = React.lazy(() => import("../MovieCard/MovieCard"))
+const MovieCard = React.lazy(() => import("../MovieCard"))
 
 const UpcomingMovieList = () => {
   const [upcomingMovie, setUpcomingMovie] = useState([])

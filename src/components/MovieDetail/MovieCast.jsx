@@ -3,9 +3,8 @@ import { getMovieCredits } from "../../utils/Api"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination } from "swiper/modules"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faUser } from "@fortawesome/free-regular-svg-icons"
 import { PropTypes } from "prop-types"
-import { faUsersSlash } from "@fortawesome/free-solid-svg-icons"
+import { faUser, faUsersSlash } from "@fortawesome/free-solid-svg-icons"
 
 const MovieCast = ({ movieId }) => {
   const [movieCredits, setMovieCredits] = useState([])
