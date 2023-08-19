@@ -4,11 +4,20 @@ import { PropTypes } from "prop-types";
 
 const Modal = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return;
+
+  window.addEventListener('click', (e) => {
+    if (e.target.id === 'backdrop') {
+      onClose();
+    }
+  });
+
   return (
-    <div className="bg-black bg-opacity-60 fixed top-0 left-0 w-full h-full flex justify-center items-center z-[999]">
-      <div className="bg-slate-800 max-w-4xl max-h-full rounded-lg m-3 md:m-5">
+    <div id="backdrop" className="bg-black bg-opacity-60 fixed top-0 left-0 w-full h-full flex justify-center items-center z-[999]">
+      <div id="modal-container" className="bg-slate-800 max-w-4xl max-h-full rounded-lg m-3 md:m-5">
         <div className="flex w-full justify-between items-center border-slate-600 border-b px-5 py-4">
-          <h2 className='text-xl text-slate-200 font-medium'>{title}</h2>
+          <h2 className='text-xl text-slate-200 font-medium'>
+            {title}
+          </h2>
           <button onClick={onClose} className="button bg-slate-700 pb-1 pt-2">
             <FontAwesomeIcon icon={faTimes} className='text-xl text-slate-200' />
           </button>

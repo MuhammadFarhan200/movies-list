@@ -9,7 +9,7 @@ const MoreInfoMovie = ({ movie }) => {
   return (
     <div className='bg-slate-800 rounded-xl p-4 mt-7'>
       <p className='text-slate-200 lg:text-lg my-3'><span className='font-medium'>Original Title: </span> {movie.original_title}</p>
-      <div className='flex flex-wrap my-3 text-slate-200 lg:text-lg'>
+      <div className='flex flex-wrap mt-3 text-slate-200 lg:text-lg'>
         <span className='font-medium'>Genre:</span>&nbsp;
         {genreMovie?.length > 0 ? genreMovie?.map((genre, index) => {
           return (
@@ -19,11 +19,11 @@ const MoreInfoMovie = ({ movie }) => {
           );
         }) : '-'}
       </div>
-      <p className='text-slate-200 lg:text-lg my-3 overflow-hidden whitespace-nowrap text-ellipsis'>
+      <p className='text-slate-200 lg:text-lg py-3 overflow-x-hidden whitespace-nowrap text-ellipsis'>
         <span className='font-medium'>Official Site:</span>&nbsp;
         {movie.homepage == "" ? '-' : <Link to={movie.homepage} className='text-sky-500 hover:underline focus:ring-2 focus:ring-cyan-500 rounded-md outline-none' target='_blank'>{movie.homepage}</Link>}
       </p>
-      <p className='text-slate-200 lg:text-lg my-3'><span className='font-medium'>Original Languange:</span> <span className='uppercase'>{movie.original_language}</span></p>
+      <p className='text-slate-200 lg:text-lg mb-3'><span className='font-medium'>Original Languange:</span> <span className='uppercase'>{movie.original_language}</span></p>
       <p className='text-slate-200 lg:text-lg my-3'><span className='font-medium'>Duration:</span> {movie.runtime} minutes</p>
       <div className='flex flex-wrap my-3 text-slate-200 lg:text-lg'>
         <span className='font-medium'>Production Companies:</span>&nbsp;

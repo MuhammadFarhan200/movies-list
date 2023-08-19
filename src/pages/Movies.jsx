@@ -217,13 +217,12 @@ const Movies = () => {
       />
 
       {isFilter ? (<ShowCurrentFilter
-        isFilter={isFilter}
         firstMovie={movies[0]}
         genreMovie={genreMovie}
         genreId={String(genreId)}
         sortBy={sortBy}
         onHandleRemoveFilter={handleRemoveFilter}
-      /> ) : (<></>)}
+      />) : (<></>)}
 
       <MoviesList movies={movies} />
       
