@@ -9,6 +9,7 @@ const MovieCard = ({ movie, className }) => {
   const [genreMovie, setGenreMovie] = useState([])
   const releaseDate = new Date(movie.release_date).toLocaleDateString('en-US', { year: 'numeric' })
   const movieRating = movie.vote_average?.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 2 })
+  const movieSlug = movie.title.toLowerCase().replace(/[^\w\s-]/g, '-').replace(/\s+/g, '-').replace(/-+/g, '-').trim()
 
   useEffect(() => { 
     getGenreMovie().then((res) => {
@@ -17,7 +18,7 @@ const MovieCard = ({ movie, className }) => {
   }, [])
 
   return (
-    <Link to={`/movie/${movie.id}`}
+    <Link to={`/movie/${movie.id}/${movieSlug}`}
       className={`${className} group relative rounded-lg outline-none focus:ring-[3px] focus:ring-cyan-500 cursor-pointer overflow-hidden`}
     >
       <div className='absolute w-full h-full bg-black opacity-0 group-hover:opacity-70 rounded-lg transition ease-in-out'></div>
@@ -34,7 +35,7 @@ const MovieCard = ({ movie, className }) => {
             </p>
         </div>
         <div className='flex flex-wrap justify-center mt-3'>
-          {movie.genre_ids.map((genreId, index) => {
+          {movie.genre_ids?.length > 0 ? movie.genre_ids.map((genreId, index) => {
             const genre = genreMovie.find(item => item.id === genreId);
 
             if (genre) {
@@ -45,7 +46,7 @@ const MovieCard = ({ movie, className }) => {
               );
             }
             return null;
-          })}
+          }) : <></>}
         </div>
         <p className='text-white text-sm mt-3 hidden xl:block'>{`${movie.overview.substring(0, 100)}...`}</p>
       </div>

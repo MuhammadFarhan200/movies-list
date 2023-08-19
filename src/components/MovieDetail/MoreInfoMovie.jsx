@@ -29,7 +29,7 @@ const MoreInfoMovie = ({ movie }) => {
         <span className='font-medium'>Production Companies:</span>&nbsp;
         {productionCompany?.length > 0 ? productionCompany?.map((company, index) => {
           return (
-            <span key={company.id}>
+            <span key={company.id + index}>
               {company.name}{index !== productionCompany.length - 1 ? ',\u00A0' : ''}
             </span>
           )

@@ -22,22 +22,21 @@ const Movies = () => {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [isFilter, setIsFilter] = useState(false)
 
-  
   useEffect(() => {
     document.title = 'MList | List of Movies'
     window.scrollTo(0, 0)
 
-    const sessionSearch = sessionStorage.getItem('searchQuery')
-    const sessionPage = sessionStorage.getItem('currentPagePopular')
-    const sessionPageSearch = sessionStorage.getItem('pageSearch')
-    const sessionGenreId = sessionStorage.getItem('genreId')
-    const sessionSortBy = sessionStorage.getItem('sortBy')
+    let sessionSearch = sessionStorage.getItem('searchQuery')
+    let sessionPage = sessionStorage.getItem('currentPage')
+    let sessionPageSearch = sessionStorage.getItem('pageSearch')
+    let sessionGenreId = sessionStorage.getItem('genreId')
+    let sessionSortBy = sessionStorage.getItem('sortBy')
 
     if (sessionSearch) {
       setIsSearch(true)
       setSearchQuery(sessionSearch)
-      setCurrentPageSearch(sessionPageSearch ? parseInt(sessionPageSearch) : 1);
-      searchMovie(sessionSearch, currentPageSearch).then((res) => {
+      setCurrentPageSearch(parseInt(sessionPageSearch));
+      searchMovie(sessionSearch, parseInt(sessionPageSearch)).then((res) => {
         setMovies(res.results)
         setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
       })
@@ -57,7 +56,7 @@ const Movies = () => {
         getGenreMovie().then((res) => {
           setGenreMovie(res.filter((genre) => parseGenreId.includes(genre.id)))
         })
-        getDiscoverMovie(parseInt(sessionPage), parseGenreId, sessionSortBy).then((res) => {
+        getDiscoverMovie(currentPage, parseGenreId, sessionSortBy).then((res) => {
           setMovies(res.results)
           setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
         })
@@ -137,8 +136,8 @@ const Movies = () => {
       sessionStorage.setItem('searchQuery', q)
       const res = await searchMovie(q, 1)
       setMovies(res.results)
-      setCurrentPageSearch(1)
       sessionStorage.setItem('pageSearch', 1)
+      setCurrentPageSearch(1)
       setTotalPages(res.total_pages > 500 ? 500 : res.total_pages)
       setStartIndex(0);
       setEndIndex(10);
@@ -158,7 +157,7 @@ const Movies = () => {
       setCurrentPageSearch(pageNumber)
       sessionStorage.setItem('pageSearch', pageNumber)
     } else {
-      sessionStorage.setItem('currentPagePopular', pageNumber)
+      sessionStorage.setItem('currentPage', pageNumber)
       const sessionGenreId = sessionStorage.getItem('genreId')
       setCurrentPage(pageNumber)
       if (sessionGenreId) {
@@ -185,7 +184,7 @@ const Movies = () => {
   const handleRemoveFilter = () => {
     sessionStorage.removeItem('sortBy')
     sessionStorage.removeItem('genreId')
-    sessionStorage.removeItem('currentPagePopular')
+    sessionStorage.removeItem('currentPage')
     setIsFilter(false)
     setCurrentPage(1)
     setSortBy('')
@@ -214,6 +213,7 @@ const Movies = () => {
         closeModal={closeModal}
         setIsFilter={setIsFilter}
         setGenreId={setGenreId}
+        setStartIndex={setStartIndex}
       />
 
       {isFilter ? (<ShowCurrentFilter

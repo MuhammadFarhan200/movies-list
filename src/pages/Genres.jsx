@@ -32,7 +32,7 @@ const Genres = () => {
       showNotification("warning", "Please select at least one genre!")
     } else {
       navigate('/movies')
-      sessionStorage.setItem('currentPagePopular', 1)
+      sessionStorage.setItem('currentPage', 1)
       sessionStorage.setItem('genreId', JSON.stringify(selectedGenres))
     }
   }

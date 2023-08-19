@@ -39,7 +39,7 @@ const MovieCast = ({ movieId }) => {
           className='pb-10 px-5 sm:px-10 rounded-lg'
         >
           {movieCredits.cast?.map((cast) => (
-            <SwiperSlide key={cast.id}>
+            <SwiperSlide key={cast.cast_id}>
               <div className='bg-slate-500 rounded-lg text-slate-200 shadow-xl aspect-[4/6]'>
                 {cast.profile_path ? (
                   <img src={`${import.meta.env.VITE_IMG_URL}/w500/${cast.profile_path}`} alt={cast.name} className='rounded-lg text-slate-200 shadow-xl' />

@@ -5,11 +5,13 @@ import { faEye, faImage, faTimes } from "@fortawesome/free-solid-svg-icons"
 import { PropTypes } from "prop-types";
 
 const ShowCurrentFilter = ({ firstMovie, genreMovie, genreId, sortBy, onHandleRemoveFilter }) => {
+  const movieSlug = firstMovie?.title.toLowerCase().replace(/[^\w\s-]/g, '-').replace(/\s+/g, '-').replace(/-+/g, '-').trim()
+
   return (
     <div className='flex items-start mb-8 gap-3'>
      <Suspense fallback={<div className='bg-slate-500 w-full h-full xl:max-w-sm rounded-lg animate-pulse aspect-[16/8]'></div>}>
       <Link 
-        to={`/movie/${firstMovie?.id}`} 
+        to={`/movie/${firstMovie?.id}/${movieSlug}`} 
         className='hidden relative bg-slate-500 w-full h-full xl:block xl:max-w-sm max-h-52 rounded-lg group overflow-hidden focus:ring-[3px] focus:ring-cyan-500 aspect-[16/8]'>
         {firstMovie?.backdrop_path ? (
           <>

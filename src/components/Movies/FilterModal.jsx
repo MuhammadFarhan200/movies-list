@@ -6,7 +6,7 @@ import Swal from "sweetalert2"
 import { getGenreMovie } from "../../utils/Api"
 import Modal from "../Modal"
 
-const FilterModal = ({ isOpenModal, closeModal, setIsFilter, setGenreId }) => {
+const FilterModal = ({ isOpenModal, closeModal, setIsFilter, setGenreId, setStartIndex }) => {
   const [genres, setGenres] = useState([])
   const [selectedSort, setSelectedSort] = useState('')
   const [selectedGenres, setSelectedGenres] = useState([])
@@ -41,7 +41,8 @@ const FilterModal = ({ isOpenModal, closeModal, setIsFilter, setGenreId }) => {
       sessionStorage.removeItem('pageSearch')
       sessionStorage.setItem('sortBy', selectedSort)
       sessionStorage.setItem('genreId', JSON.stringify(selectedGenres))
-      sessionStorage.setItem('currentPagePopular', 1)
+      sessionStorage.setItem('currentPage', 1)
+      setStartIndex(0)
       setIsFilter(true)
       setGenreId(selectedGenres)
       closeModal()
@@ -154,6 +155,7 @@ FilterModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   setIsFilter: PropTypes.func.isRequired,
   setGenreId: PropTypes.func.isRequired,
+  setStartIndex: PropTypes.func.isRequired,
 }
 
 export default FilterModal

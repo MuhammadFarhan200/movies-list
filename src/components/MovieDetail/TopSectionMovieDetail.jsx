@@ -5,10 +5,12 @@ import { PropTypes } from "prop-types";
 
 const TopSectionMovieDetail = ({ movie }) => {
   const releaseDate = new Date(movie.release_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+  const movieBackdrop = movie.backdrop_path ? movie.backdrop_path : null
+  const backgroundImageUrl = movieBackdrop !== null ? `${import.meta.env.VITE_IMG_URL}/original/${movieBackdrop}` : null
 
   return (
-    <div className={`relative w-full h-[350px] lg:h-[400px]`} style={{ backgroundImage: `url(${import.meta.env.VITE_IMG_URL}/original/${movie.backdrop_path})`, backgroundSize: 'cover', backgroundPosition: 'top center' }}>
-      <div className={`absolute ${movie.backdrop_path !== null ? 'bg-black' : 'bg-slate-700'} opacity-70 w-full h-full`}></div>
+    <div className={`relative w-full h-[350px] lg:h-[400px]`} style={{ backgroundImage: `url(${backgroundImageUrl})`, backgroundSize: 'cover', backgroundPosition: 'top center' }}>
+      <div className={`absolute ${movieBackdrop !== null ? 'bg-black' : 'bg-slate-700'} opacity-70 w-full h-full`}></div>
       <div className='flex justify-center items-center gap-10 w-fit absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
         <Suspense fallback={<div className='w-full h-full bg-slate-400 animate-pulse aspect-[4/6]'></div>}>
           {movie.poster_path ? (
